@@ -8,7 +8,6 @@ export const login = ({ userName, password }) => {
             .post('/api/login', {
                 userName,
                 password,
-                completed: false
             })
             .then(res => {
                 dispatch(loginSuccess(res.data));

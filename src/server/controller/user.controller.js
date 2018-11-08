@@ -1,14 +1,14 @@
 const db = require('../models');
-const upload = require('./upload');
 const user = db.User;
 const uploadData = db.uploadData;
-// Post a user
+
+// Create a user
 exports.create = (req, res) => {
-	const { firstName, lastName, password } = req.body;
+	const { emailAddress, username, password } = req.body;
 	// Save to MySQL database
 	user.create({
-	  firstName,
-	  lastName,
+	  emailAddress,
+	  username,
 	  password,
 	}).then(user => {
 		// Send created user to client
@@ -17,11 +17,9 @@ exports.create = (req, res) => {
 	});
 };
 
-// fetch all users
+// Fetch all users
 exports.findAll = (req, res) => {
-	console.log("test");
 	user.findAll().then(users => {
-	  // Send all users to Client
 	  res.send(users);
 	});
 };
@@ -36,10 +34,10 @@ exports.findById = (req, res) => {
 // Update a user
 exports.update = (req, res) => {
 	const id = req.params.userId;
-	const { firstName, lastName, password } = req.body;
-	user.update( { 
-		firstName, 
-		lastName, 
+	const { emailAddress, username, password } = req.body;
+	user.update({ 
+		emailAddress, 
+		username, 
 		password,
 	}, 
 	{
@@ -53,20 +51,34 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
 	const id = req.params.userId;
 	user.destroy({
-	  where: { id }
+	  where: {id}
 	}).then(() => {
 	  res.status(200).send('deleted successfully a user with id = ' + id);
 	});
 };
 
+// Login a user
+exports.login = (req, res) => {
+	const { emailAddress, username, password } = req.body;
+	user.update({
+		emailAddress, 
+		username, 
+		password,
+	}, 
+	{
+		where: {id}
+	}).then(() => {
+		res.status(200).send("logined successfully a user");
+	});
+};
+
+// File uploading
 exports.upload = (req, res) => {
-	// Save to MySQL database
 	const filePath = `${req.protocol}://${req.domain}/${req.file.filename}`;
 	uploadData.create({
 	  filename: req.body.filename,
 	  url: filePath,
 	}).then(user => {
-		// Send created user to client
 		res.send(user);
 	});
 }

@@ -52,5 +52,4 @@ class AppRouter extends React.Component {
   }
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)(AppRouter);
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(AppRouter);
