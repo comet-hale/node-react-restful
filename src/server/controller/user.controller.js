@@ -1,6 +1,6 @@
 const db = require('../models');
 const upload = require('./upload');
-const user = db.Users;
+const user = db.User;
 const uploadData = db.uploadData;
 // Post a user
 exports.create = (req, res) => {
@@ -19,6 +19,7 @@ exports.create = (req, res) => {
 
 // fetch all users
 exports.findAll = (req, res) => {
+	console.log("test");
 	user.findAll().then(users => {
 	  // Send all users to Client
 	  res.send(users);
@@ -35,7 +36,7 @@ exports.findById = (req, res) => {
 // Update a user
 exports.update = (req, res) => {
 	const id = req.params.userId;
-	const { firstname, lastname, password } = req.body;
+	const { firstName, lastName, password } = req.body;
 	user.update( { 
 		firstName, 
 		lastName, 

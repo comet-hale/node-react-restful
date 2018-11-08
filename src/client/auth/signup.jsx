@@ -37,7 +37,7 @@ class AppSignUp extends React.Component {
   render() {
     const { userName, password, emailAddress } = this.state;
     return (
-      <div className="row">
+      <div className="row container">
         <div className="container col-lg-6 col-lg-offset-6 col-md-8 
         col-md-offset-4 col-sm-8 col-sm-offset-4 signup">
           <h1>Please signup!</h1><hr />

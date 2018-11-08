@@ -1,7 +1,7 @@
 import {userConstants} from "../constants/action_types";
 const initialState = {
     loading: false,
-    resData: [],
+    resData: [{loginFlag: false}],
     error: null
 };
 const rootReducer = (state = initialState, action) => {

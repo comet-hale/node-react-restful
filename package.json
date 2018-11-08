@@ -9,7 +9,8 @@
     "clean": "rimraf dist node_modules",
     "dev": "webpack-dev-server --hot --inline",
     "start": "webpack --config webpack.config.js && npm run server",
-    "server": "nodemon ./src/server/server.js"
+    "server": "nodemon ./src/server/server.js",
+    "dbset": "sequelize db:migrate && sequelize db:seed:all"
   },
   "repository": {
     "type": "git"

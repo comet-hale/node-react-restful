@@ -5,10 +5,10 @@ const uploading = require('../controller/upload');
 
 // Retrieve all user
 router.get('/users', users.findAll);
- 
+
 // Retrieve a single user by Id
 router.get('/users/:userId', users.findById);
- 
+
 // Update a user with Id
 router.put('/users/:userId', users.update);
  

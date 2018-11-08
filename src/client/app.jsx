@@ -1,15 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, Link, Redirect, Switch} from "react-router-dom";
-import LogIn from "./authorizing/login";
-import LogOut from "./authorizing/logout";
-import SignUp from "./authorizing/signup";
+import LogIn from "./auth/login";
+import LogOut from "./auth/logout";
+import SignUp from "./auth/signup";
 import Home from "./components/home";
 import UserManager from "./components/user_manage";
 import PrivateRoute from "./components/privateroute";
 
 const mapStateToProps = state => {
-  return {loginFlag: state.resData.loginFlag};
+  return {loginFlag: state.resData[0].loginFlag};
 };
 
 class AppRouter extends React.Component {

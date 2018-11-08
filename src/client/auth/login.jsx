@@ -37,9 +37,9 @@ class AppLogIn extends React.Component {
   render() {
     const { userName, password } = this.state;
     return (
-      <div className="row">
+      <div className="row container">
         <div className="container col-lg-6 col-lg-offset-6 col-md-8 
-        col-md-offset-4 col-sm-8 col-sm-offset-4 login">
+          col-md-offset-4 col-sm-8 col-sm-offset-4 login">
           <h2>please login!</h2><hr />
           <form className="form" onSubmit={this.handleSubmit}>
             <div className="form-group">

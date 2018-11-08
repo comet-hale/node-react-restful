@@ -12,9 +12,7 @@ export const login = ({ userName, password }) => {
                 completed: false
             })
             .then(res => {
-                setTimeout(() => {
-                    dispatch(loginSuccess(res.data));
-                }, 2500);
+                dispatch(loginSuccess(res.data));
             })
             .catch(err => {
                 dispatch(loginFailure(err.message));
