@@ -29,7 +29,7 @@ class AppSignUp extends React.Component {
     e.preventDefault();
     const {emailAddress, userName, password} = this.state;
     if(userName && password){
-      this.props.signup({emailAddress, userName, password});
+      //this.props.signup({emailAddress, userName, password});
     }
     this.setState({emailAddress: '', userName: '', password: ''});
   }
@@ -66,5 +66,4 @@ class AppSignUp extends React.Component {
   }
 }
 
-const SignUp = connect(null, mapDispatchToProps)(AppSignUp);
-export default SignUp;
+export default connect(null, mapDispatchToProps)(AppSignUp);

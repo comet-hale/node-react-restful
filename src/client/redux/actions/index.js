@@ -4,7 +4,6 @@ import axios from 'axios';
 export const login = ({ userName, password }) => {
     return dispatch => {
         dispatch(loginStarted());
-
         axios
             .post('/api/login', {
                 userName,
@@ -39,7 +38,7 @@ const loginStarted = () => ({
 });
 
 export const logout = () => ({
-    type: userConstants.USER_LOGOUT, payload: {}
+    type: userConstants.USER_LOGOUT, payload: {loginFlag: false}
 });
 
 export const signup = userData => ({
