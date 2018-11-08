@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const users = require('../controller/user.controller.js');
 const uploading = require('../controller/upload');
@@ -13,9 +14,9 @@ router.put('/users/:userId', users.update);
 router.delete('/users/:userId', users.delete);
 // Create a new user
 router.post('/users', users.create);
-//login test
+// login test
 router.post('/users/login', users.login);
-//Signup a user
+// Signup a user
 router.post('/users/signup', users.create);
 
 // upload a file
