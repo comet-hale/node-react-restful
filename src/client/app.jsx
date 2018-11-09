@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(logout()),
+    logout: () => dispatch(logout())
   };
 };
 class AppRouter extends React.Component {
@@ -63,5 +63,5 @@ class AppRouter extends React.Component {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(AppRouter);

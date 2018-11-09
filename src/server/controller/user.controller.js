@@ -7,17 +7,16 @@ const uploadData = db.uploadData;
 
 // Login a user and return token
 exports.login = (req, res) => {
-  const authman = user.find({
+  const { username, password } = req.body;
+  const auth_man = user.find({
     where: {
-      username: req.body.username,
-      password: req.body.password
+      username,
+      password
     }
   });
-  if (authman) {
+  if (auth_man) {
     const token = jwt.sign({ sub: user.id }, config.secret);
-    console.log(token);
-    const { password, ...userWithoutPassword } = authman;
-    res.send(token);
+    res.send({ loginFlag: true, tokenData: token });
   }
 };
 // Create a user

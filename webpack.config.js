@@ -7,28 +7,28 @@ module.exports = {
   target: 'web',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public/'),
+    path: `${__dirname}/public`
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
     new HtmlWebPackPlugin({
-      template: './src/client/index.html',
-    }),
+      template: './src/client/index.html'
+    })
   ],
   module: {
     loaders: [
       {
         test: /\.js|.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader'],
+        loaders: ['babel-loader']
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader'),
-      },
-    ],
-  },
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
+      }
+    ]
+  }
 };

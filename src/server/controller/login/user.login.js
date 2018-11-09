@@ -11,7 +11,7 @@ module.exports = {
 
 async function authenticate({ username, password }) {
   console.log(password);
-  const user = users.findOne(u => u.username == username && u.password == password);
+  const user = users.findOne(u => u.username == username);
   if (user) {
     const token = jwt.sign({ sub: user.id }, config.secret);
     console.log(token);

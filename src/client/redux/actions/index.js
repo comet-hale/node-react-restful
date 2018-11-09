@@ -6,7 +6,7 @@ export const login = ({ userName, password }) => (dispatch) => {
   axios
     .post('/api/login', {
       userName,
-      password,
+      password
     })
     .then((res) => {
       dispatch(loginSuccess(res.data));
@@ -19,27 +19,27 @@ export const login = ({ userName, password }) => (dispatch) => {
 const loginSuccess = resData => ({
   type: userConstants.USER_LOGIN_SUCCESS,
   payload: {
-    ...resData,
-  },
+    ...resData
+  }
 });
 
 const loginFailure = error => ({
   type: userConstants.USER_LOGIN_FAILURE,
   payload: {
-    error,
-  },
+    error
+  }
 });
 
 const loginStarted = () => ({
-  type: userConstants.USER_LOGIN_STARTED,
+  type: userConstants.USER_LOGIN_STARTED
 });
 
 export const logout = () => ({
   type: userConstants.USER_LOGOUT,
-  payload: { loginFlag: false },
+  payload: { loginFlag: false }
 });
 
 export const signup = userData => ({
   type: userConstants.USER_SIGNUP,
-  payload: userData,
+  payload: userData
 });
