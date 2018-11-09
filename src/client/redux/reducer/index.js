@@ -8,13 +8,11 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.USER_LOGIN_STARTED:
-      console.log('start');
       return {
         ...state,
         loading: true,
       };
     case userConstants.USER_LOGIN_SUCCESS:
-      console.log('success');
       return {
         ...state,
         loading: false,

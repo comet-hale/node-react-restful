@@ -1,7 +1,25 @@
+const jwt = require('jsonwebtoken');
+const config = require('./login/token_config.json');
 const db = require('../models');
 
 const user = db.User;
 const uploadData = db.uploadData;
+
+// Login a user and return token
+exports.login = (req, res) => {
+  const authman = user.find({
+    where: {
+      username: req.body.username,
+      password: req.body.password
+    }
+  });
+  if (authman) {
+    const token = jwt.sign({ sub: user.id }, config.secret);
+    console.log(token);
+    const { password, ...userWithoutPassword } = authman;
+    res.send(token);
+  }
+};
 // Create a user
 exports.create = (req, res) => {
   const { emailAddress, username, password } = req.body;
@@ -10,12 +28,11 @@ exports.create = (req, res) => {
     .create({
       emailAddress,
       username,
-      password,
+      password
     })
     .then((user) => {
       // Send created user to client
       res.send(user);
-      console.log(req.body.password);
     });
 };
 // Fetch all users
@@ -39,11 +56,11 @@ exports.update = (req, res) => {
       {
         emailAddress,
         username,
-        password,
+        password
       },
       {
-        where: { id },
-      },
+        where: { id }
+      }
     )
     .then(() => {
       res.status(200).send(`updated successfully a user with id = ${id}`);
@@ -55,29 +72,10 @@ exports.delete = (req, res) => {
   const id = req.params.userId;
   user
     .destroy({
-      where: { id },
+      where: { id }
     })
     .then(() => {
       res.status(200).send(`deleted successfully a user with id = ${id}`);
-    });
-};
-
-// Login a user
-exports.login = (req, res) => {
-  const { emailAddress, username, password } = req.body;
-  user
-    .update(
-      {
-        emailAddress,
-        username,
-        password,
-      },
-      {
-        where: { id },
-      },
-    )
-    .then(() => {
-      res.status(200).send('logined successfully a user');
     });
 };
 
@@ -87,7 +85,7 @@ exports.upload = (req, res) => {
   uploadData
     .create({
       filename: req.body.filename,
-      url: filePath,
+      url: filePath
     })
     .then((user) => {
       res.send(user);

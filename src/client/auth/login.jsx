@@ -4,7 +4,7 @@ import { login } from '../redux/actions/index';
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: userData => dispatch(login(userData)),
+    login: userData => dispatch(login(userData))
   };
 };
 
@@ -13,7 +13,7 @@ class AppLogIn extends React.Component {
     super(props);
     this.state = {
       userName: '',
-      password: '',
+      password: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -78,6 +78,6 @@ class AppLogIn extends React.Component {
 
 const LogIn = connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(AppLogIn);
 export default LogIn;

@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
   const uploadData = sequelize.define(
     'uploadData',
@@ -8,8 +7,5 @@ module.exports = (sequelize, DataTypes) => {
     },
     {},
   );
-  uploadData.associate = function (models) {
-    // associations can be defined here
-  };
   return uploadData;
 };

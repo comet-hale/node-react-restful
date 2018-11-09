@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const users = require('../controller/user.controller.js');
-const uploading = require('../controller/upload');
+const uploading = require('../controller/upload/upload');
 
 // Retrieve all user
 router.get('/users', users.findAll);

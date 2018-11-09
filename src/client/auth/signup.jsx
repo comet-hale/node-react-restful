@@ -4,7 +4,7 @@ import { signup } from '../redux/actions/index';
 
 const mapDispatchToProps = dispatch => {
   return {
-    signup: userData => dispatch(signup(userData)),
+    signup: userData => dispatch(signup(userData))
   };
 };
 
@@ -14,7 +14,7 @@ class AppSignUp extends React.Component {
     this.state = {
       emailAddress: '',
       userName: '',
-      password: '',
+      password: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -88,5 +88,5 @@ class AppSignUp extends React.Component {
 
 export default connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(AppSignUp);
