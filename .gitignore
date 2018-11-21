@@ -1,4 +1,6 @@
 # Node
 node_modules/
 # Project
-public/
+views/
+.vscode/
+assets/

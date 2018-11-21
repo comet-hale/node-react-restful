@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     'uploadData',
     {
       filename: DataTypes.STRING,
-      url: DataTypes.STRING,
+      url: DataTypes.STRING
     },
-    {},
+    {}
   );
   return uploadData;
 };
