@@ -12,6 +12,13 @@ const mapDispatchToProps = dispatch => ({
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
+    this.confirmDelete = this.confirmDelete.bind(this);
+  }
+  confirmDelete() {
+    if (confirm('Delete Account? This is extremely important.')) {
+      this.props.accountDelete();
+    } else {
+    }
   }
   render() {
     const { loginFlag } = this.props;
@@ -34,7 +41,7 @@ class NavigationBar extends React.Component {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a href="#" onClick={this.props.accountDelete}>
+                    <a href="#" onClick={this.confirmDelete}>
                       <span className="glyphicon glyphicon-trash" /> Delete Account
                     </a>
                   </li>

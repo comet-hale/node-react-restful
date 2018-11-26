@@ -2,11 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { accountUpdate } from '../redux/actions';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    accountUpdate: userData => dispatch(accountUpdate(userData))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  accountUpdate: userData => dispatch(accountUpdate(userData))
+});
 
 class AppUpdate extends React.Component {
   constructor(props) {
@@ -14,7 +12,6 @@ class AppUpdate extends React.Component {
     this.state = {
       emailAddress: localStorage.getItem('emailAddress'),
       username: localStorage.getItem('username'),
-      oldPassword: localStorage.getItem('password'),
       oldInputPassword: '',
       confirmPassword: '',
       newPassword: ''
@@ -46,9 +43,9 @@ class AppUpdate extends React.Component {
         col-md-offset-4 col-sm-8 col-sm-offset-4 log-in"
         >
           <form className="form" onSubmit={this.handleSubmit}>
-            <h1>Please update!</h1>
+            <h2>Change password</h2>
             <div className="form-group">
-              <label>Please enter the old password</label>
+              <label>Old password</label>
               <input
                 type="password"
                 className="form-control"
@@ -58,7 +55,7 @@ class AppUpdate extends React.Component {
               />
             </div>
             <div className="form-group">
-              <label>Please enter the new password</label>
+              <label>New password</label>
               <input
                 type="password"
                 className="form-control"
@@ -68,7 +65,7 @@ class AppUpdate extends React.Component {
               />
             </div>
             <div className="form-group">
-              <label>Please confirm the password</label>
+              <label>Confirm new password</label>
               <input
                 type="password"
                 className="form-control"
@@ -79,7 +76,7 @@ class AppUpdate extends React.Component {
             </div>
             <div className="form-button">
               <button type="submit" className="btn btn-success btn-block">
-                Update
+                Update password
               </button>
             </div>
           </form>
