@@ -8,7 +8,7 @@ const rootReducer = (state = { loginFlag: false, data: [] }, action) => {
         loginFlag: true
       };
     case userConstants.USER_LOGOUT:
-      console.log('logout---reducers');
+      localStorage.clear();
       return {
         ...state,
         loginFlag: false

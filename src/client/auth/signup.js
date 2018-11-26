@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { signup } from '../redux/actions';
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => ({
   signup: userData => dispatch(signup(userData))
-};
+});
 
 class AppSignUp extends React.Component {
   constructor(props) {

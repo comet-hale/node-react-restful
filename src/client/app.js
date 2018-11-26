@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import { logout, accountDelete, accountUpdate } from './redux/actions';
 import LogIn from './auth/login';
 import SignUp from './auth/signup';
 import Update from './auth/update';
@@ -13,11 +12,7 @@ import NavigationBar from './navigationBar';
 const mapStateToProps = state => {
   return { loginFlag: state.loginFlag };
 };
-const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout()),
-  accountDelete: () => dispatch(accountDelete()),
-  accountUpdate: () => dispatch(accountUpdate())
-});
+
 class AppRouter extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +21,7 @@ class AppRouter extends React.Component {
     const { loginFlag } = this.props;
     return (
       <div className="first-pg container-fluid">
-        <NavigationBar userInfo={loginFlag} />
+        <NavigationBar />
         <Switch>
           <Route
             path="/login"
@@ -45,9 +40,4 @@ class AppRouter extends React.Component {
   }
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AppRouter)
-);
+export default withRouter(connect(mapStateToProps)(AppRouter));
