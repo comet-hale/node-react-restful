@@ -16,13 +16,12 @@ exports.login = (req, res) => {
       }
     })
     .then((user) => {
-      const { emailAddress, username, password } = user;
+      const { emailAddress, username } = user;
       const usertoken = jwt.sign(username, config.secret);
       res.send({
         token: usertoken,
         emailAddress,
-        username,
-        password
+        username
       });
     })
     .catch(err => res.status(401).send('Unauthorized'));
@@ -37,27 +36,27 @@ exports.create = (req, res) => {
       }
     })
     .then((ret) => {
-      if (ret !== null) res.send('Registered email');
-      if (ret == null) {
-        const { emailAddress, username, password } = req.body;
-        user
-          .create({
-            emailAddress,
-            username,
-            password
-          })
-          .then((user) => {
-            // Send created user to client
-            const { emailAddress, username, password } = user;
-            const usertoken = jwt.sign(username, config.secret);
-            res.send({
-              token: usertoken,
-              emailAddress,
-              username,
-              password
-            });
-          });
+      if (ret !== null) {
+        res.send('Registered email');
+        return;
       }
+      const { emailAddress, username, password } = req.body;
+      user
+        .create({
+          emailAddress,
+          username,
+          password
+        })
+        .then((user) => {
+          // Send created user to client
+          const { emailAddress, username } = user;
+          const usertoken = jwt.sign(username, config.secret);
+          res.send({
+            token: usertoken,
+            emailAddress,
+            username
+          });
+        });
     });
 };
 

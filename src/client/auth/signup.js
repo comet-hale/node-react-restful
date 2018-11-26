@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { signup } from '../redux/actions';
 
 const mapDispatchToProps = dispatch => {
-  return {
-    signup: userData => dispatch(signup(userData))
-  };
+  signup: userData => dispatch(signup(userData))
 };
 
 class AppSignUp extends React.Component {

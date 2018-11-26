@@ -1,38 +1,46 @@
 import { userConstants } from './constants';
 
-// export {
-//   login, logout, updateLogin, signup, userManage, userGet, accountDelete, accountUpdate
-// };
+const {
+  LOGIN_WATCHER,
+  USER_LOGIN,
+  SIGNUP_WATCHER,
+  USERMANAGE_WATCHER,
+  ACCOUNTDELETE_WATCHER,
+  ACCOUNTUPDATE_WATCHER,
+  USER_INFO,
+  USER_LOGOUT
+} = userConstants;
 
 // saga call
-export const login = authParams => ({
-  type: userConstants.LOGIN_WATCHER,
+const login = authParams => ({
+  type: LOGIN_WATCHER,
   payload: authParams
 });
-export const updateLogin = () => ({
-  type: userConstants.USER_LOGIN
+const updateLogin = () => ({
+  type: USER_LOGIN
 });
-export const signup = signupParams => ({
-  type: userConstants.SIGNUP_WATCHER,
+const signup = signupParams => ({
+  type: SIGNUP_WATCHER,
   payload: signupParams
 });
-export const userManage = () => ({
-  type: userConstants.USERMANAGE_WATCHER
+const userManage = () => ({
+  type: USERMANAGE_WATCHER
 });
-export const accountDelete = () => ({
-  type: userConstants.ACCOUNTDELETE_WATCHER
+const accountDelete = () => ({
+  type: ACCOUNTDELETE_WATCHER
 });
-export const accountUpdate = updateParams => ({
-  type: userConstants.ACCOUNTUPDATE_WATCHER,
+const accountUpdate = updateParams => ({
+  type: ACCOUNTUPDATE_WATCHER,
   payload: updateParams
 });
 
 // reducer call
-export const logout = () => {
-  localStorage.clear();
-  return { type: userConstants.USER_LOGOUT };
-};
-export const userGet = userData => ({
-  type: userConstants.USER_INFO,
+const logout = () => ({ type: USER_LOGOUT });
+const userGet = userData => ({
+  type: USER_INFO,
   payload: userData
 });
+
+export {
+  login, updateLogin, signup, userManage, accountDelete, accountUpdate, logout, userGet
+};

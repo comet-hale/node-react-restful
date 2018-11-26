@@ -3,54 +3,21 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { userConstants } from './constants';
 import { updateLogin, userGet, logout } from './actions';
 
-// export {
-//   loginWatcher,
-//   userManageWatcher,
-//   signupWatcher,
-//   accountDeleteWatcher,
-//   accountUpdateWatcher
-// };
+// axios implement middleware
+const fetchGet = (method = 'get', url, data, headers) => axios.request({
+  method,
+  url: `api/${url}`,
+  data,
+  headers
+});
 
-const loginApi = authParams => axios.request({
-  method: 'post',
-  url: '/api/users/login',
-  data: authParams
-});
-const userManageApi = () => axios.request({
-  method: 'get',
-  url: '/api/users/manage',
-  headers: { authorization: localStorage.getItem('token') }
-});
-const signupApi = signupDatas => axios.request({
-  method: 'post',
-  url: '/api/users/signup',
-  data: signupDatas
-});
-const accountDeleteApi = () => axios.request({
-  method: 'delete',
-  url: '/api/users/delete',
-  headers: { authorization: localStorage.getItem('token') }
-});
-const accountUpdateApi = updateDatas => axios.request({
-  method: 'put',
-  url: '/api/users/update',
-  headers: { authorization: localStorage.getItem('token') },
-  data: updateDatas
-});
 // workers
 function* loginEffect(action) {
   try {
-    const { data } = yield call(loginApi, action.payload);
-    // data.map((info) => {
-    //   console.log(info);
-    // });
-    const {
-      token, emailAddress, username, password
-    } = data;
-    localStorage.setItem('token', token);
-    localStorage.setItem('emailAddress', emailAddress);
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    const { data } = yield call(fetchGet, 'post', 'users/login', action.payload);
+    Object.keys(data).map((key) => {
+      localStorage.setItem(key, data[key]);
+    });
     if (localStorage.length > 0) yield put(updateLogin());
   } catch (e) {
     console.log(e);
@@ -58,55 +25,52 @@ function* loginEffect(action) {
 }
 function* userManageEffect() {
   try {
-    const { data } = yield call(userManageApi);
+    const { data } = yield call(fetchGet, 'get', 'users/manage', '', {
+      authorization: localStorage.getItem('token')
+    });
     yield put(userGet(data));
   } catch (e) {}
 }
 function* signupEffect(action) {
   try {
-    const { data } = yield call(signupApi, action.payload);
-    const {
-      token, emailAddress, username, password
-    } = data;
-    localStorage.setItem('token', token);
-    localStorage.setItem('emailAddress', emailAddress);
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    const { data } = yield call(fetchGet, 'post', 'users/signup', action.payload);
+    Object.keys(data).map((key) => {
+      localStorage.setItem(key, data[key]);
+    });
     if (localStorage.length > 0) yield put(updateLogin());
   } catch (e) {}
 }
 function* accountDeleteEffect() {
   try {
-    const { data } = yield call(accountDeleteApi);
+    const { data } = yield call(fetchGet, 'delete', 'users/delete', '', {
+      authorization: localStorage.getItem('token')
+    });
     console.log(data);
     yield put(logout());
   } catch (e) {}
 }
 function* accountUpdateEffect(action) {
   try {
-    const { data } = yield call(accountUpdateApi, action.payload);
-    const {
-      token, emailAddress, username, password
-    } = data;
-    localStorage.setItem('token', token);
-    localStorage.setItem('emailAddress', emailAddress);
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    const { data } = yield call(fetchGet, 'put', 'users/update', action.payload, {
+      authorization: localStorage.getItem('token')
+    });
+    Object.keys(data).map((key) => {
+      localStorage.setItem(key, data[key]);
+    });
   } catch (e) {}
 }
 // watchers
-export function* loginWatcher() {
-  yield takeLatest(userConstants.LOGIN_WATCHER, loginEffect);
-}
-export function* userManageWatcher() {
-  yield takeLatest(userConstants.USERMANAGE_WATCHER, userManageEffect);
-}
-export function* signupWatcher() {
-  yield takeLatest(userConstants.SIGNUP_WATCHER, signupEffect);
-}
-export function* accountDeleteWatcher() {
-  yield takeLatest(userConstants.ACCOUNTDELETE_WATCHER, accountDeleteEffect);
-}
-export function* accountUpdateWatcher() {
-  yield takeLatest(userConstants.ACCOUNTUPDATE_WATCHER, accountUpdateEffect);
+export function* userWatchers() {
+  const {
+    LOGIN_WATCHER,
+    USERMANAGE_WATCHER,
+    SIGNUP_WATCHER,
+    ACCOUNTDELETE_WATCHER,
+    ACCOUNTUPDATE_WATCHER
+  } = userConstants;
+  yield takeLatest(LOGIN_WATCHER, loginEffect);
+  yield takeLatest(USERMANAGE_WATCHER, userManageEffect);
+  yield takeLatest(SIGNUP_WATCHER, signupEffect);
+  yield takeLatest(ACCOUNTDELETE_WATCHER, accountDeleteEffect);
+  yield takeLatest(ACCOUNTUPDATE_WATCHER, accountUpdateEffect);
 }

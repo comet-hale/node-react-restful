@@ -1,18 +1,6 @@
 import { all } from 'redux-saga/effects';
-import {
-  loginWatcher,
-  userManageWatcher,
-  signupWatcher,
-  accountDeleteWatcher,
-  accountUpdateWatcher
-} from './authSaga';
+import { userWatchers } from './authSaga';
 
 export default function* rootSaga() {
-  yield all([
-    loginWatcher(),
-    userManageWatcher(),
-    signupWatcher(),
-    accountDeleteWatcher(),
-    accountUpdateWatcher()
-  ]);
+  yield all([userWatchers()]);
 }

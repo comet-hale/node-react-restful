@@ -2,13 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../redux/actions';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    login: userData => dispatch(login(userData))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  login: userData => dispatch(login(userData))
+});
 
 class AppLogIn extends React.Component {
+  //static typescript()
   constructor(props) {
     super(props);
     this.state = {
@@ -25,8 +24,8 @@ class AppLogIn extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault(); //default prevent get method action: url=/?, so not to
-    //reload the page in server
+    e.preventDefault(); //default prevent get method action: url=/?,
+    //so not to reload the page in server
     const { username, password } = this.state;
     if (username && password) {
       this.props.login({ username, password });

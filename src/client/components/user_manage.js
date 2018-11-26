@@ -1,18 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-const mapStateToProps = state => {
-  return { userDatas: state.data };
-};
+import { userManage } from '../redux/actions';
+const mapStateToProps = state => ({
+  userDatas: state.data
+});
+const mapDispatchToProps = dispatch => ({
+  userManage: () => dispatch(userManage())
+});
 
 class UserManager extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    this.props.userManage();
+  }
+  componentWillUnmount() {}
   render() {
     const { userDatas } = this.props;
     return (
-      <div className="usermanage container">
+      <div className="user-manage container">
         <table className="table table-striped">
           <thead>
             <tr>
@@ -38,4 +45,7 @@ class UserManager extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(UserManager);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserManager);

@@ -1,7 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
-// const webpackHotMiddleware = require('webpack-hot-middleware');
 
 module.exports = {
   entry: ['webpack-hot-middleware/client', './src/client/client.js'],

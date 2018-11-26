@@ -31,7 +31,7 @@ class AppUpdate extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { emailAddress, username, newPassword } = this.state;
-    if (newPassword == confirmPassword) {
+    if (newPassword === confirmPassword) {
       this.props.accountUpdate({ emailAddress, username, newPassword });
     }
     this.setState({ oldInputPassword: '', newPassword: '', confirmPassword: '' });

@@ -12,11 +12,11 @@ function template(title, initialState = {}, content = '') {
                 <title> ${title} </title>
                 <link
                   rel="stylesheet"
-                  href="/bootstrap/css/bootstrap.min.css"
+                  href="/css/bootstrap.min.css"
                 />
                 <link rel="stylesheet" href="/style.css">
                 <script src="/jquery.min.js"></script>
-                <script src="/bootstrap/js/bootstrap.min.js"></script>
+                <script src="/js/bootstrap.min.js"></script>
               </head>
               <body>
                 <div class="content">
