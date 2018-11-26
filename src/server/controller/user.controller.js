@@ -111,8 +111,7 @@ exports.update = (req, res) => {
             res.send({
               token: usertoken,
               emailAddress,
-              username,
-              password
+              username
             });
           });
       });

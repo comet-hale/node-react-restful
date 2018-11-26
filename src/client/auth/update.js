@@ -43,11 +43,10 @@ class AppUpdate extends React.Component {
       <div className="row container">
         <div
           className="container col-lg-6 col-lg-offset-6 col-md-8 
-        col-md-offset-4 col-sm-8 col-sm-offset-4 signup"
+        col-md-offset-4 col-sm-8 col-sm-offset-4 log-in"
         >
-          <h1>Please update!</h1>
-          <hr />
           <form className="form" onSubmit={this.handleSubmit}>
+            <h1>Please update!</h1>
             <div className="form-group">
               <label>Please enter the old password</label>
               <input
@@ -78,10 +77,11 @@ class AppUpdate extends React.Component {
                 onChange={this.handleChange}
               />
             </div>
-            <br />
-            <button type="submit" className="btn btn-success btn-block">
-              Update
-            </button>
+            <div className="form-button">
+              <button type="submit" className="btn btn-success btn-block">
+                Update
+              </button>
+            </div>
           </form>
         </div>
       </div>

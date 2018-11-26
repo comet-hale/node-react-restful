@@ -37,46 +37,48 @@ class AppSignUp extends React.Component {
     return (
       <div className="row container">
         <div
-          className="container col-lg-6 col-lg-offset-6 col-md-8 
-        col-md-offset-4 col-sm-8 col-sm-offset-4 signup"
+          className="container col-lg-6 col-lg-offset-6  
+          col-sm-8 col-sm-offset-4 log-in"
         >
-          <h1>Please signup!</h1>
-          <hr />
           <form className="form" onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label>Email*</label>
-              <input
-                type="text"
-                className="form-control"
-                name="emailAddress"
-                value={emailAddress}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Username*</label>
+              <label>Username</label>
               <input
                 type="text"
                 className="form-control"
                 name="username"
                 value={username}
+                placeholder="Pick a username"
                 onChange={this.handleChange}
               />
             </div>
             <div className="form-group">
-              <label>Password*</label>
+              <label>Email</label>
+              <input
+                type="text"
+                className="form-control"
+                name="emailAddress"
+                value={emailAddress}
+                placeholder="you@example.com"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
               <input
                 type="password"
                 className="form-control"
                 name="password"
                 value={password}
+                placeholder="Create a password"
                 onChange={this.handleChange}
               />
             </div>
-            <br />
-            <button type="submit" className="btn btn-success btn-block">
-              SignUp
-            </button>
+            <div className="form-button">
+              <button type="submit" className="btn btn-success btn-block">
+                Sign up for FirstSite
+              </button>
+            </div>
           </form>
         </div>
       </div>

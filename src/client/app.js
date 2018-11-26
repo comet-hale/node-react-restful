@@ -20,7 +20,7 @@ class AppRouter extends React.Component {
   render() {
     const { loginFlag } = this.props;
     return (
-      <div className="first-pg container-fluid">
+      <div className="container-fluid first-pg">
         <NavigationBar />
         <Switch>
           <Route

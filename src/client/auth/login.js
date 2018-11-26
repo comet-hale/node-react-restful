@@ -38,14 +38,13 @@ class AppLogIn extends React.Component {
     return (
       <div className="row container">
         <div
-          className="container col-lg-6 col-lg-offset-6 col-md-8 
-          col-md-offset-4 col-sm-8 col-sm-offset-4 login"
+          className="container col-lg-4 col-lg-offset-8 
+          col-sm-6 col-sm-offset-6 log-in"
         >
-          <h2>please login!</h2>
-          <hr />
           <form className="form" onSubmit={this.handleSubmit}>
+            <h2>Sign in to FirstSite</h2>
             <div className="form-group">
-              <label>Username*</label>
+              <label>Username or email address</label>
               <input
                 type="text"
                 className="form-control"
@@ -55,7 +54,7 @@ class AppLogIn extends React.Component {
               />
             </div>
             <div className="form-group">
-              <label>Password*</label>
+              <label>Password</label>
               <input
                 type="password"
                 className="form-control"
@@ -64,10 +63,11 @@ class AppLogIn extends React.Component {
                 onChange={this.handleChange}
               />
             </div>
-            <br />
-            <button type="submit" className="btn btn-lg btn-success btn-block">
-              Login
-            </button>
+            <div className="form-button">
+              <button type="submit" className="btn btn-lg btn-success btn-block">
+                Sign in
+              </button>
+            </div>
           </form>
         </div>
       </div>

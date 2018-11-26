@@ -17,7 +17,7 @@ class NavigationBar extends React.Component {
     const { loginFlag } = this.props;
     return (
       <div className="navbar navbar-inverse">
-        <div className="container-fluid">
+        <div className="container">
           <ul className="nav navbar-nav">
             <li>
               <Link className="first-pg-user-manage" to="/usermanage">
