@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import configureStore from '../../client/redux/configureStore';
 import { StaticRouter } from 'react-router-dom';
-import App from '../../client/app';
+import App from '../../client/app/app';
 
 module.exports = function render(req, initialState) {
   const store = configureStore(initialState);

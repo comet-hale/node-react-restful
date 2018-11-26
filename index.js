@@ -7,7 +7,7 @@ const ssr = require('./src/server/ssr/ssr.index');
 
 const app = express();
 
-// // if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'development') {
 const webpack = require('webpack');
 const config = require('./webpack.dev.config.js');
 
@@ -19,7 +19,7 @@ app.use(
   })
 );
 app.use(require('webpack-hot-middleware')(compiler));
-// // }
+// }
 
 app.use(express.static('assets'));
 app.use(express.static('media'));

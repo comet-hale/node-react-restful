@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['webpack-hot-middleware/client', './src/client/client.js'],
+  entry: ['webpack-hot-middleware/client', './src/client/pure.client.js'],
   output: {
     path: path.resolve(__dirname, 'assets'),
     filename: 'client.js',

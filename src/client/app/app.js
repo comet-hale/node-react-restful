@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import LogIn from './auth/login';
-import SignUp from './auth/signup';
-import Update from './auth/update';
-import Home from './components/home';
-import UserManager from './components/user_manage';
+import LogIn from '../auth/login';
+import SignUp from '../auth/signup';
+import Update from '../auth/update';
+import Home from '../components/home';
+import UserManager from '../components/user_manage';
 import PrivateRoute from './privateroute';
 import NavigationBar from './navigationBar';
 
