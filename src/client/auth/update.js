@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { accountUpdate } from '../redux/actions';
+import actionCreator from '../redux/actions';
 
 const mapDispatchToProps = dispatch => ({
-  accountUpdate: userData => dispatch(accountUpdate(userData))
+  accountUpdate: userData => dispatch(actionCreator.accountUpdate(userData))
 });
 
 class AppUpdate extends React.Component {

@@ -12,35 +12,31 @@ const {
 } = userConstants;
 
 // saga call
-const login = authParams => ({
+exports.login = authParams => ({
   type: LOGIN_WATCHER,
   payload: authParams
 });
-const updateLogin = () => ({
+exports.updateLogin = () => ({
   type: USER_LOGIN
 });
-const signup = signupParams => ({
+exports.signup = signupParams => ({
   type: SIGNUP_WATCHER,
   payload: signupParams
 });
-const userManage = () => ({
+exports.userManage = () => ({
   type: USERMANAGE_WATCHER
 });
-const accountDelete = () => ({
+exports.accountDelete = () => ({
   type: ACCOUNTDELETE_WATCHER
 });
-const accountUpdate = updateParams => ({
+exports.accountUpdate = updateParams => ({
   type: ACCOUNTUPDATE_WATCHER,
   payload: updateParams
 });
 
 // reducer call
-const logout = () => ({ type: USER_LOGOUT });
-const userGet = userData => ({
+exports.logout = () => ({ type: USER_LOGOUT });
+exports.userGet = userData => ({
   type: USER_INFO,
   payload: userData
 });
-
-export {
-  login, updateLogin, signup, userManage, accountDelete, accountUpdate, logout, userGet
-};

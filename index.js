@@ -23,6 +23,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(express.static('assets'));
 app.use(express.static('media'));
+app.use(express.static('upload'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -31,6 +31,14 @@ class AppRouter extends React.Component {
             path="/signup"
             render={props => (loginFlag ? <Redirect to="/" /> : <SignUp {...props} />)}
           />
+          {/* <Route
+            path="/upload"
+            render={props => (loginFlag ? <Redirect to="/" /> : <UpLoad {...props} />)}
+          />
+          <Route
+            path="/download"
+            render={props => (loginFlag ? <Redirect to="/" /> : <DownLoad {...props} />)}
+          /> */}
           <PrivateRoute path="/update" component={Update} userInfo={loginFlag} />
           <PrivateRoute path="/usermanage" component={UserManager} userInfo={loginFlag} />
           <Route exact path="/" component={Home} />

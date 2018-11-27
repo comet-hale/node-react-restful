@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { userConstants } from './constants';
-import { updateLogin, userGet, logout } from './actions';
+import actionCreator from './actions';
 
 // axios implement middleware
 const fetchGet = (method = 'get', url, data, headers) => axios.request({
@@ -18,7 +18,7 @@ function* loginEffect(action) {
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);
     });
-    if (localStorage.length > 0) yield put(updateLogin());
+    if (localStorage.length > 0) yield put(actionCreator.updateLogin());
   } catch (e) {
     console.log(e);
   }
@@ -28,7 +28,7 @@ function* userManageEffect() {
     const { data } = yield call(fetchGet, 'get', 'users/manage', '', {
       authorization: localStorage.getItem('token')
     });
-    yield put(userGet(data));
+    yield put(actionCreator.userGet(data));
   } catch (e) {}
 }
 function* signupEffect(action) {
@@ -37,7 +37,7 @@ function* signupEffect(action) {
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);
     });
-    if (localStorage.length > 0) yield put(updateLogin());
+    if (localStorage.length > 0) yield put(actionCreator.updateLogin());
   } catch (e) {}
 }
 function* accountDeleteEffect() {
@@ -46,7 +46,7 @@ function* accountDeleteEffect() {
       authorization: localStorage.getItem('token')
     });
     console.log(data);
-    yield put(logout());
+    yield put(actionCreator.logout());
   } catch (e) {}
 }
 function* accountUpdateEffect(action) {

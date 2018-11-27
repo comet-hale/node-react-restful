@@ -2,22 +2,17 @@ const express = require('express');
 
 const router = express.Router();
 const users = require('../controller/user.controller.js');
-const uploading = require('../controller/upload');
+const uploading = require('../controller/file.upload');
 
-// Retrieve all user(usermange)
-router.get('/users/manage', users.findAll);
-// Retrieve a single user by Id
-router.get('/users/:userId', users.findById);
-// Update a user with Id
-router.put('/users/update', users.update);
-// Delete a user with Id
-router.delete('/users/delete', users.delete);
-// Login a user
-router.post('/users/login', users.login);
-// Signup a user
-router.post('/users/signup', users.create);
+// user manage
+router.get('/users/manage', users.findAll); // all user getting
+router.get('/users/:userId', users.findById); // user by id
+router.put('/users/update', users.update); // update
+router.delete('/users/delete', users.delete); // delete
+router.post('/users/login', users.login); // login
+router.post('/users/signup', users.create); // signup
 
-// upload a file
+// file up/down load
 router.post('/upload', uploading.single('avatar'), users.upload);
-
+// router.get('/download', users.download);
 module.exports = router;

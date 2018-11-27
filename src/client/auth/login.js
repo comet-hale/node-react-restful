@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../redux/actions';
+import actionCreator from '../redux/actions';
 
 const mapDispatchToProps = dispatch => ({
-  login: userData => dispatch(login(userData))
+  login: userData => dispatch(actionCreator.login(userData))
 });
 
 class AppLogIn extends React.Component {

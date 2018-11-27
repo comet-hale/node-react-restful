@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { userManage } from '../redux/actions';
+import actionCreator from '../redux/actions';
 const mapStateToProps = state => ({
   userDatas: state.data
 });
 const mapDispatchToProps = dispatch => ({
-  userManage: () => dispatch(userManage())
+  userManage: () => dispatch(actionCreator.userManage())
 });
 
 class UserManager extends React.Component {

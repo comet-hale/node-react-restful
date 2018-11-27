@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { signup } from '../redux/actions';
+import actionCreator from '../redux/actions';
 import FormErrors from './formErrors';
 
 const mapDispatchToProps = dispatch => ({
-  signup: userData => dispatch(signup(userData))
+  signup: userData => dispatch(actionCreator.signup(userData))
 });
 
 class AppSignUp extends React.Component {
