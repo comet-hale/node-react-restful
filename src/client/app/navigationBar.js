@@ -6,8 +6,7 @@ import actionCreator from '../redux/actions';
 const mapStateToProps = state => ({ loginFlag: state.loginFlag });
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(actionCreator.logout()),
-  accountDelete: () => dispatch(actionCreator.accountDelete()),
-  accountUpdate: () => dispatch(actionCreator.accountUpdate())
+  accountDelete: () => dispatch(actionCreator.accountDelete())
 });
 class NavigationBar extends React.Component {
   constructor(props) {

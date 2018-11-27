@@ -11,6 +11,7 @@ router.put('/user/update', user.update); // update
 router.delete('/user/delete', user.delete); // delete
 router.post('/user/login', user.login); // login
 router.post('/user/signup', user.create); // signup
+
 // file up/down load
 router.post('/upload', uploading.single('avatar'), files.upload);
 // router.get('/download', users.download);

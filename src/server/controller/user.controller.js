@@ -16,7 +16,9 @@ exports.login = (req, res) => {
     .then(() => {
       console.log(token.creatToken(username));
       res.send({
-        token: token.creatToken(username)
+        token: token.creatToken(username),
+        emailAddress,
+        username
       });
     })
     .catch(err => res.status(401).send('Unauthorized'));
@@ -44,7 +46,9 @@ exports.create = (req, res) => {
         })
         .then(
           res.send({
-            token: token.creatToken(username)
+            token: token.creatToken(username),
+            emailAddress,
+            username
           })
         );
     });
@@ -77,7 +81,9 @@ exports.update = (req, res) => {
       )
       .then(
         res.send({
-          token: token.creatToken(username)
+          token: token.creatToken(username),
+          emailAddress,
+          username
         })
       );
   } else {
@@ -86,7 +92,7 @@ exports.update = (req, res) => {
 
 // Delete a user
 exports.delete = (req, res) => {
-  const decoded = token.verifyToken(req.headers.authorization);
+  const username = token.verifyToken(req.headers.authorization);
   if (username !== null) {
     user
       .destroy({
