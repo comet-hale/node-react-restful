@@ -1,11 +1,9 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/token_config.js');
 const db = require('../models');
+const token = require('../middleware/jwt.middleware');
 
 const user = db.User;
-const uploadData = db.uploadData;
 
-// Login a user and return token
+// Login a user
 exports.login = (req, res) => {
   const { username, password } = req.body;
   user
@@ -15,24 +13,22 @@ exports.login = (req, res) => {
         password
       }
     })
-    .then((user) => {
-      const { emailAddress, username } = user;
-      const usertoken = jwt.sign(username, config.secret);
+    .then(() => {
+      console.log(token.creatToken(username));
       res.send({
-        token: usertoken,
-        emailAddress,
-        username
+        token: token.creatToken(username)
       });
     })
     .catch(err => res.status(401).send('Unauthorized'));
 };
 
-// Create a user(signup)
+// Create a user
 exports.create = (req, res) => {
+  const { emailAddress, username, password } = req.body;
   user
     .find({
       where: {
-        emailAddress: req.body.emailAddress
+        emailAddress
       }
     })
     .then((ret) => {
@@ -40,120 +36,65 @@ exports.create = (req, res) => {
         res.send('Registered email');
         return;
       }
-      const { emailAddress, username, password } = req.body;
       user
         .create({
           emailAddress,
           username,
           password
         })
-        .then((user) => {
-          // Send created user to client
-          const { emailAddress, username } = user;
-          const usertoken = jwt.sign(username, config.secret);
+        .then(
           res.send({
-            token: usertoken,
-            emailAddress,
-            username
-          });
-        });
+            token: token.creatToken(username)
+          })
+        );
     });
 };
 
-// Fetch all users(usermanage)
+// Fetch all users
 exports.findAll = (req, res) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).send('Unauthorized');
+  if (token.verifyToken(req.headers.authorization) !== null) {
+    user.findAll().then((users) => {
+      res.send(users);
+    });
+  } else {
   }
-  try {
-    const decoded = jwt.verify(token, config.secret);
+};
+
+// Update a user
+exports.update = (req, res) => {
+  if (token.verifyToken(req.headers.authorization) !== null) {
+    const { emailAddress, username, password } = req.body;
     user
-      .findOne({
-        where: { username: decoded }
-      })
+      .update(
+        {
+          emailAddress,
+          username,
+          password
+        },
+        {
+          where: { username }
+        }
+      )
       .then(
-        user.findAll().then((users) => {
-          res.send(users);
+        res.send({
+          token: token.creatToken(username)
         })
       );
-  } catch (err) {}
-};
-
-// Update a user's
-exports.update = (req, res) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).send('Unauthorized');
+  } else {
   }
-  try {
-    const decoded = jwt.verify(token, config.secret);
-    console.log(decoded);
-    user
-      .findOne({
-        where: { username: decoded }
-      })
-      .then(() => {
-        const { emailAddress, username, password } = req.body;
-        user
-          .update(
-            {
-              emailAddress,
-              username,
-              password
-            },
-            {
-              where: { username: decoded }
-            }
-          )
-          .then(() => {
-            const usertoken = jwt.sign(username, config.secret);
-            res.send({
-              token: usertoken,
-              emailAddress,
-              username
-            });
-          });
-      });
-  } catch (err) {}
 };
 
-// Delete a user by Id
+// Delete a user
 exports.delete = (req, res) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).send('Unauthorized');
-  }
-  try {
-    const decoded = jwt.verify(token, config.secret);
+  const decoded = token.verifyToken(req.headers.authorization);
+  if (username !== null) {
     user
       .destroy({
-        where: { username: decoded }
+        where: { username }
       })
       .then(() => {
         res.status(200).send('deleted successfully a user');
       });
-  } catch (err) {}
+  } else {
+  }
 };
-
-// Find a user by Id
-exports.findById = (req, res) => {
-  user.findById(req.params.userId).then((user) => {
-    res.send(user);
-  });
-};
-
-// File uploading
-exports.upload = (req, res) => {
-  const filePath = `${req.protocol}://${req.domain}/${req.file.filename}`;
-  uploadData
-    .create({
-      filename: req.body.filename,
-      url: filePath
-    })
-    .then((user) => {
-      res.send(user);
-    });
-};
-
-// File downloading

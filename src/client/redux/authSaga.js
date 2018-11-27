@@ -14,7 +14,7 @@ const fetchGet = (method = 'get', url, data, headers) => axios.request({
 // workers
 function* loginEffect(action) {
   try {
-    const { data } = yield call(fetchGet, 'post', 'users/login', action.payload);
+    const { data } = yield call(fetchGet, 'post', 'user/login', action.payload);
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);
     });
@@ -25,7 +25,7 @@ function* loginEffect(action) {
 }
 function* userManageEffect() {
   try {
-    const { data } = yield call(fetchGet, 'get', 'users/manage', '', {
+    const { data } = yield call(fetchGet, 'get', 'user/manage', '', {
       authorization: localStorage.getItem('token')
     });
     yield put(actionCreator.userGet(data));
@@ -33,7 +33,7 @@ function* userManageEffect() {
 }
 function* signupEffect(action) {
   try {
-    const { data } = yield call(fetchGet, 'post', 'users/signup', action.payload);
+    const { data } = yield call(fetchGet, 'post', 'user/signup', action.payload);
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);
     });
@@ -42,7 +42,7 @@ function* signupEffect(action) {
 }
 function* accountDeleteEffect() {
   try {
-    const { data } = yield call(fetchGet, 'delete', 'users/delete', '', {
+    const { data } = yield call(fetchGet, 'delete', 'user/delete', '', {
       authorization: localStorage.getItem('token')
     });
     console.log(data);
@@ -51,7 +51,7 @@ function* accountDeleteEffect() {
 }
 function* accountUpdateEffect(action) {
   try {
-    const { data } = yield call(fetchGet, 'put', 'users/update', action.payload, {
+    const { data } = yield call(fetchGet, 'put', 'user/update', action.payload, {
       authorization: localStorage.getItem('token')
     });
     Object.keys(data).map((key) => {
