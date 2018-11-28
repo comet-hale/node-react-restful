@@ -6,14 +6,18 @@ const uploadData = db.uploadData;
 // File uploading
 exports.upload = (req, res) => {
   if (token.verifyToken(req.headers.authorization) !== null) {
-    const filePath = `${req.protocol}://${req.domain}/${req.file.filename}`;
+    const fileUrl = `${req.file.filename}`;
     uploadData
       .create({
-        filename: req.body.filename,
-        url: filePath
+        description: req.body.filename,
+        filename: `${req.file.filename}`
       })
-      .then((user) => {
-        res.send(user);
+      .then((response) => {
+        res.status(200).send({ success: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({ success: false });
       });
   } else {
   }

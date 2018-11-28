@@ -59,18 +59,55 @@ function* accountUpdateEffect(action) {
     });
   } catch (e) {}
 }
+function* fileUploadEffect(action) {
+  try {
+    const { data } = yield call(fetchGet, 'post', 'upload', action.payload, {
+      authorization: localStorage.getItem('token')
+    });
+    if (data.success) {
+      alert('Upload success!');
+    } else {
+      alert('Upload failed!');
+    }
+  } catch (e) {}
+}
+function* fileDownloadEffect(action) {
+  try {
+    const { data } = yield call(fetchGet, 'get', 'download', action.payload, {
+      authorization: localStorage.getItem('token')
+    });
+    yield put(actionCreator.logout());
+  } catch (e) {}
+}
+function* fileDownloadStartEffect(action) {
+  try {
+    const { data } = yield call(fetchGet, 'get', 'downloadStart', action.payload, {
+      authorization: localStorage.getItem('token')
+    });
+    Object.keys(data).map((key) => {
+      localStorage.setItem(key, data[key]);
+    });
+  } catch (e) {}
+}
+
 // watchers
 export function* userWatchers() {
   const {
     LOGIN_WATCHER,
-    USERMANAGE_WATCHER,
+    USER_MANAGE_WATCHER,
     SIGNUP_WATCHER,
-    ACCOUNTDELETE_WATCHER,
-    ACCOUNTUPDATE_WATCHER
+    ACCOUNT_DELETE_WATCHER,
+    ACCOUNT_UPDATE_WATCHER,
+    FILE_UPLOAD_WATCHER,
+    FILE_DOWNLOAD_WATCHER,
+    FILE_DOWNLOAD_START_WATCHER
   } = userConstants;
   yield takeLatest(LOGIN_WATCHER, loginEffect);
-  yield takeLatest(USERMANAGE_WATCHER, userManageEffect);
+  yield takeLatest(USER_MANAGE_WATCHER, userManageEffect);
   yield takeLatest(SIGNUP_WATCHER, signupEffect);
-  yield takeLatest(ACCOUNTDELETE_WATCHER, accountDeleteEffect);
-  yield takeLatest(ACCOUNTUPDATE_WATCHER, accountUpdateEffect);
+  yield takeLatest(ACCOUNT_DELETE_WATCHER, accountDeleteEffect);
+  yield takeLatest(ACCOUNT_UPDATE_WATCHER, accountUpdateEffect);
+  yield takeLatest(FILE_UPLOAD_WATCHER, fileUploadEffect);
+  yield takeLatest(FILE_DOWNLOAD_WATCHER, fileDownloadEffect);
+  yield takeLatest(FILE_DOWNLOAD_START_WATCHER, fileDownloadStartEffect);
 }

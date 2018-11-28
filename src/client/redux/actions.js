@@ -4,9 +4,9 @@ const {
   LOGIN_WATCHER,
   USER_LOGIN,
   SIGNUP_WATCHER,
-  USERMANAGE_WATCHER,
-  ACCOUNTDELETE_WATCHER,
-  ACCOUNTUPDATE_WATCHER,
+  USER_MANAGE_WATCHER,
+  ACCOUNT_DELETE_WATCHER,
+  ACCOUNT_UPDATE_WATCHER,
   USER_INFO,
   USER_LOGOUT
 } = userConstants;
@@ -24,16 +24,27 @@ exports.signup = signupParams => ({
   payload: signupParams
 });
 exports.userManage = () => ({
-  type: USERMANAGE_WATCHER
+  type: USER_MANAGE_WATCHER
 });
 exports.accountDelete = () => ({
-  type: ACCOUNTDELETE_WATCHER
+  type: ACCOUNT_DELETE_WATCHER
 });
 exports.accountUpdate = updateParams => ({
-  type: ACCOUNTUPDATE_WATCHER,
+  type: ACCOUNT_UPDATE_WATCHER,
   payload: updateParams
 });
 
+exports.fileUpload = uploadParams => ({
+  type: FILE_UPLOAD_WATCHER,
+  payload: uploadParams
+});
+exports.fileDownload = downloadParams => ({
+  type: FILE_DOWNLOAD_WATCHER,
+  payload: downloadParams
+});
+exports.fileDownloadStart = () => ({
+  type: FILE_DOWNLOAD_START_WATCHER
+});
 // reducer call
 exports.logout = () => ({ type: USER_LOGOUT });
 exports.userGet = userData => ({
