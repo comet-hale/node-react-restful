@@ -2,64 +2,46 @@ import React from 'react';
 import { connect } from 'react-redux';
 import actionCreator from '../redux/actions';
 import FormErrors from './formErrors';
-
 const mapDispatchToProps = dispatch => ({
   login: userData => dispatch(actionCreator.login(userData))
 });
 
 class AppLogIn extends React.Component {
+  //static typescript()
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
-      formErrors: { username: '', password: '' },
-      usernameValid: false,
-      passwordValid: false,
       formValid: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
-    this.validateForm = this.validateForm.bind(this);
+    this.changeState = this.changeState.bind(this);
   }
-
-  validateField(fieldName, value) {
-    let { usernameValid, passwordValid } = this.state;
-    let fieldValidationErrors = this.state.formErrors;
-
-    switch (fieldName) {
-      case 'username':
-        usernameValid = value.length >= 6;
-        fieldValidationErrors.username = usernameValid ? '' : 'Username is too short';
-        break;
-      case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '' : 'Password is too short';
-        break;
-      default:
-        break;
-    }
-    this.setState(
-      {
-        formErrors: fieldValidationErrors,
-        usernameValid: usernameValid,
-        passwordValid: passwordValid
-      },
-      this.validateForm
-    );
+  componentDidUpdate() {
+    console.log('user/form');
   }
-  validateForm() {
-    const { usernameValid, passwordValid } = this.state;
-    this.setState({
-      formValid: usernameValid && passwordValid
+  changeState(validState) {
+    // console.log(validState);
+    Object.keys(validState).map((stateName, i) => {
+      if (this.state[stateName] !== validState[stateName]) {
+        // this.setState({ [stateName]: validState[stateName] });
+        console.log(this.state);
+        // const { usernameValid, passwordValid } = this.state;
+        if (this.state.usernameValid !== undefined && this.state.passwordValid !== undefined) {
+          // console.log('user' + this.state.usernameValid);
+          // console.log('pass' + this.state.passwordValid);
+          // this.setState({ formValid: this.state.usernameValid && this.state.passwordValid });
+        }
+      }
     });
+    console.log('form' + this.state.formValid);
   }
+
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value }, () => {
-      this.validateField(name, value);
-    });
+    this.setState({ [name]: value });
   }
 
   handleSubmit(e) {
@@ -73,7 +55,8 @@ class AppLogIn extends React.Component {
   }
 
   render() {
-    const { username, password, formErrors, formValid } = this.state;
+    console.log(this.state['username']);
+    const { username, password, formValid } = this.state;
     return (
       <div className="row container">
         <div
@@ -83,7 +66,7 @@ class AppLogIn extends React.Component {
           <form className="form" onSubmit={this.handleSubmit}>
             <h2>Sign in to FirstSite</h2>
             <div className="form-group">
-              <label>Username</label>
+              <label>Username or email address</label>
               <input
                 type="text"
                 className="form-control"
@@ -91,7 +74,7 @@ class AppLogIn extends React.Component {
                 value={username}
                 onChange={this.handleChange}
               />
-              <FormErrors formErrors={{ username: formErrors.username }} />
+              <FormValidator validInfo={{ username }} changeState={this.changeState} />
             </div>
             <div className="form-group">
               <label>Password</label>
@@ -102,7 +85,7 @@ class AppLogIn extends React.Component {
                 value={password}
                 onChange={this.handleChange}
               />
-              <FormErrors formErrors={{ username: formErrors.password }} />
+              <FormValidator2 validInfo={{ password }} changeState={this.changeState} />
             </div>
             <div className="form-button">
               <button
