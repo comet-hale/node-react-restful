@@ -25,7 +25,6 @@ class UserManager extends React.Component {
             <tr>
               <th>Email</th>
               <th>Username</th>
-              <th>Password</th>
             </tr>
           </thead>
           <tbody>
@@ -34,7 +33,6 @@ class UserManager extends React.Component {
                 <tr key={key}>
                   <td>{item.emailAddress}</td>
                   <td>{item.username}</td>
-                  <td>{item.password}</td>
                 </tr>
               );
             })}

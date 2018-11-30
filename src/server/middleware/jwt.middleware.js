@@ -1,29 +1,15 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config/token_config.js');
-const db = require('../models');
+const key = require('../config/token.key.js');
 
-const userModel = db.User;
-
-const verifyDecoded = (username) => {
-  userModel
-    .findOne({
-      where: { username }
-    })
-    .then(() => username)
-    .catch(() => null);
-};
-
-// Fetch all users(usermanage)
-exports.verifyToken = (token) => {
-  if (!token) {
-    return null;
-  }
+// Verify token
+const verifyToken = (req, res, next) => {
+  const { authentification } = req.headers;
   try {
-    verifyDecoded(jwt.verify(token, config.secret));
+    if (jwt.verify(authentification, key.secret) !== undefined) {
+      next();
+    } else {
+    }
   } catch (err) {}
 };
 
-// Send created user to client
-exports.creatToken = (username) => {
-  jwt.sign(username, config.secret);
-};
+module.exports = verifyToken;

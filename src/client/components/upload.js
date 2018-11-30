@@ -9,13 +9,40 @@ const mapDispatchToProps = dispatch => ({
 class FileUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.state = { description: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUploadFile = this.handleUploadFile.bind(this);
   }
-  handleFileUpload() {}
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+  handleUpload(e) {
+    const data = new FormData();
+    data.append('file', e.target.files[0]);
+  }
+
   render() {
     return (
-      <div className="user-manage container">
-        <input type="file" onChange={this.handleFileUpload} />
+      <div className="container">
+        <h2>File upload</h2>
+        <form onSubmit={this.handleUpload}>
+          <div>
+            <input
+              type="text"
+              className="form-control"
+              name="description"
+              value={description}
+              onChange={this.handleChange}
+            />
+          </div>
+          <input type="file" onChange={this.handleUploadFile} />
+          <div>
+            <button type="submit" className="btn btn-lg btn-success btn-block">
+              Upload
+            </button>
+          </div>
+        </form>
       </div>
     );
   }

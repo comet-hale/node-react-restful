@@ -28,7 +28,7 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-
+// how to prevent comming
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

@@ -1,18 +1,21 @@
 const express = require('express');
 
-const router = express.Router();
 const user = require('../controller/user.controller');
-const files = require('../controller/file.load');
+const files = require('../controller/file.loader');
 const uploading = require('../middleware/upload.middleware');
+const jwtMiddleware = require('../middleware/jwt.middleware');
 
-// user manage
-router.get('/user/manage', user.findAll); // all user getting
-router.put('/user/update', user.update); // update
-router.delete('/user/delete', user.delete); // delete
-router.post('/user/login', user.login); // login
-router.post('/user/signup', user.create); // signup
+const router = express.Router();
 
-// file up/down load
-router.post('/upload', uploading.single('avatar'), files.upload);
+// user managing
+router.post('/user/login', user.login);
+router.post('/user/signup', user.create);
+router.get('/user/manage', jwtMiddleware, user.findAll);
+router.put('/user/update', jwtMiddleware, user.update);
+router.delete('/user/delete', jwtMiddleware, user.delete);
+
+// file uploading and downloading
+router.post('/upload', uploading.single('avatar'), jwtMiddleware, files.upload);
 // router.get('/download', users.download);
+
 module.exports = router;

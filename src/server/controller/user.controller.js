@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require('../models');
-const token = require('../middleware/jwt.middleware');
+const creatToken = require('../helper/token.create');
 
 const BCRYPT_SALT_ROUNDS = 10;
 const user = db.User;
@@ -13,16 +13,15 @@ exports.login = (req, res) => {
       where: { username }
     })
     .then((ans) => {
-      bcrypt.compare(password, ans.password);
-    })
-    .then((samePassword) => {
-      if (!samePassword) {
-        res.send({
-          token: token.creatToken(username),
-          emailAddress,
-          username
-        });
-      }
+      bcrypt.compare(password, ans.password).then((samePassword) => {
+        if (samePassword) {
+          res.send({
+            token: creatToken(username),
+            emailAddress: ans.emailAddress,
+            username
+          });
+        }
+      });
     })
     .catch(err => res.status(401).send('Unauthorized'));
 };
@@ -49,7 +48,7 @@ exports.create = (req, res) => {
         })
         .then(
           res.send({
-            token: token.creatToken(username),
+            token: creatToken(username),
             emailAddress,
             username
           })
@@ -59,51 +58,41 @@ exports.create = (req, res) => {
 
 // Fetch all users
 exports.findAll = (req, res) => {
-  if (token.verifyToken(req.headers.authorization) !== null) {
-    user.findAll().then((users) => {
-      res.send(users);
-    });
-  } else {
-  }
+  user.findAll({ attributes: ['emailAddress', 'username'] }).then((users) => {
+    res.send(users);
+  });
 };
 
 // Update a user
 exports.update = (req, res) => {
-  if (token.verifyToken(req.headers.authorization) !== null) {
-    const { emailAddress, username, password } = req.body;
-    user
-      .update(
-        {
-          emailAddress,
-          username,
-          password
-        },
-        {
-          where: { username }
-        }
-      )
-      .then(
-        res.send({
-          token: token.creatToken(username),
-          emailAddress,
-          username
-        })
-      );
-  } else {
-  }
+  const { emailAddress, username, password } = req.body;
+  user
+    .update(
+      {
+        emailAddress,
+        username,
+        password
+      },
+      {
+        where: { username }
+      }
+    )
+    .then(
+      res.send({
+        token: creatToken(username),
+        emailAddress,
+        username
+      })
+    );
 };
 
 // Delete a user
 exports.delete = (req, res) => {
-  const username = token.verifyToken(req.headers.authorization);
-  if (username !== null) {
-    user
-      .destroy({
-        where: { username }
-      })
-      .then(() => {
-        res.status(200).send('deleted successfully a user');
-      });
-  } else {
-  }
+  user
+    .destroy({
+      where: { username: req.body.username }
+    })
+    .then(() => {
+      res.status(200).send('deleted successfully a user');
+    });
 };

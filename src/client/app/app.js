@@ -8,8 +8,8 @@ import SignUp from '../auth/signup';
 import Update from '../auth/update';
 import Home from '../components/home';
 import UserManager from '../components/user.manage';
-import Upload from '../components/upload';
-import Download from '../components/download';
+// import Upload from '../components/upload';
+// import Download from '../components/download';
 
 const mapStateToProps = state => {
   return { loginFlag: state.loginFlag };
@@ -27,8 +27,8 @@ class AppRouter extends React.Component {
         <Switch>
           <Route path="/login" component={LogIn} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/upload" component={Upload} />
-          <Route path="/download" component={Download} />
+          {/* <Route path="/upload" component={Upload} /> */}
+          {/* <Route path="/download" component={Download} /> */}
           <PrivateRoute path="/update" component={Update} userInfo={loginFlag} />
           <PrivateRoute path="/usermanage" component={UserManager} userInfo={loginFlag} />
           <Route exact path="/" component={Home} />

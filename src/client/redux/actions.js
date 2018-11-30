@@ -34,17 +34,17 @@ exports.accountUpdate = updateParams => ({
   payload: updateParams
 });
 
-exports.fileUpload = uploadParams => ({
-  type: FILE_UPLOAD_WATCHER,
-  payload: uploadParams
-});
-exports.fileDownload = downloadParams => ({
-  type: FILE_DOWNLOAD_WATCHER,
-  payload: downloadParams
-});
-exports.fileDownloadStart = () => ({
-  type: FILE_DOWNLOAD_START_WATCHER
-});
+// exports.fileUpload = uploadParams => ({
+//   type: FILE_UPLOAD_WATCHER,
+//   payload: uploadParams
+// });
+// exports.fileDownload = downloadParams => ({
+//   type: FILE_DOWNLOAD_WATCHER,
+//   payload: downloadParams
+// });
+// exports.fileDownloadStart = () => ({
+//   type: FILE_DOWNLOAD_START_WATCHER
+// });
 // reducer call
 exports.logout = () => ({ type: USER_LOGOUT });
 exports.userGet = userData => ({

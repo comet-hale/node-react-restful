@@ -57,7 +57,7 @@ class NavigationBar extends React.Component {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a href="#" onClick={this.confirmDelete}>
+                    <a href="/" onClick={this.confirmDelete}>
                       <span className="glyphicon glyphicon-trash" /> Delete Account
                     </a>
                   </li>
@@ -68,7 +68,7 @@ class NavigationBar extends React.Component {
                   </li>
                   <li class="divider" />
                   <li>
-                    <a href="#" onClick={this.props.logout}>
+                    <a href="/" onClick={this.props.logout}>
                       <span className="glyphicon glyphicon-log-out" /> Sign Out
                     </a>
                   </li>
