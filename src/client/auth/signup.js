@@ -24,14 +24,12 @@ class AppSignUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateField = this.validateField.bind(this);
     this.validateForm = this.validateForm.bind(this);
-    // this.errorClass = this.errorClass;
+    this.errorClass = this.errorClass;
   }
 
   validateField(fieldName, value) {
+    let { emailAddressValid, usernameValid, passwordValid } = this.state;
     let fieldValidationErrors = this.state.formErrors;
-    let emailAddressValid = this.state.emailAddressValid;
-    let usernameValid = this.state.usernameValid;
-    let passwordValid = this.state.passwordValid;
 
     switch (fieldName) {
       case 'emailAddress':
@@ -61,15 +59,15 @@ class AppSignUp extends React.Component {
   }
 
   validateForm() {
+    const { emailAddressValid, usernameValid, passwordValid } = this.state;
     this.setState({
-      formValid:
-        this.state.emailAddressValid && this.state.usernameValid && this.state.passwordValid
+      formValid: emailAddressValid && usernameValid && passwordValid
     });
   }
 
-  // errorClass(error) {
-  //   return error.length === 0 ? '' : 'has-error';
-  // }
+  errorClass(error) {
+    return error.length === 0 ? '' : 'has-error';
+  }
 
   handleChange(e) {
     const { name, value } = e.target;
@@ -88,7 +86,7 @@ class AppSignUp extends React.Component {
   }
 
   render() {
-    const { username, password, emailAddress } = this.state;
+    const { username, password, emailAddress, formErrors, formValid } = this.state;
     return (
       <div className="row container">
         <div
@@ -96,14 +94,13 @@ class AppSignUp extends React.Component {
           col-sm-8 col-sm-offset-4 log-in"
         >
           <form className="form" onSubmit={this.handleSubmit}>
-            {/* <div className="panel panel-default">
-              <FormErrors formErrors={this.state.formErrors} />
-            </div> */}
             <h2>Sign up</h2>
+            <div className="panel panel-default">
+              <FormErrors formErrors={formErrors} />
+            </div>
             <div
-              className="form-group"
-              // className={`form-group
-              // ${this.errorClass(this.state.formErrors.username)}`}
+              className={`form-group
+              ${this.errorClass(formErrors.username)}`}
             >
               <label>Username</label>
               <input
@@ -116,9 +113,8 @@ class AppSignUp extends React.Component {
               />
             </div>
             <div
-              className="form-group"
-              // className={`form-group
-              // ${this.errorClass(this.state.formErrors.emailAddress)}`}
+              className={`form-group
+              ${this.errorClass(formErrors.emailAddress)}`}
             >
               <label>Email</label>
               <input
@@ -131,9 +127,8 @@ class AppSignUp extends React.Component {
               />
             </div>
             <div
-              className="form-group"
-              // className={`form-group
-              // ${this.errorClass(this.state.formErrors.password)}`}
+              className={`form-group
+              ${this.errorClass(formErrors.password)}`}
             >
               <label>Password</label>
               <input
@@ -146,11 +141,7 @@ class AppSignUp extends React.Component {
               />
             </div>
             <div className="form-button">
-              <button
-                type="submit"
-                className="btn btn-success btn-block"
-                disabled={!this.state.formValid}
-              >
+              <button type="submit" className="btn btn-success btn-block" disabled={!formValid}>
                 Sign up for FirstSite
               </button>
             </div>
