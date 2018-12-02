@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagas';
+import rootSaga from './rootsaga';
 import rootReducer from './reducers';
 
 // Redux devtools chrome extension

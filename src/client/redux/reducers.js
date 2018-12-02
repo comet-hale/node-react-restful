@@ -13,7 +13,12 @@ const rootReducer = (state = { loginFlag: false, data: [] }, action) => {
         ...state,
         loginFlag: false
       };
-    case userConstants.USER_INFO:
+    case userConstants.SAVE_USER_INFO:
+      return {
+        ...state,
+        data: action.payload
+      };
+    case userConstants.SAVE_FILE_INFO:
       return {
         ...state,
         data: action.payload

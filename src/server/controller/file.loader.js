@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const db = require('../models');
 
 const uploadData = db.uploadData;
@@ -5,6 +6,7 @@ const uploadData = db.uploadData;
 // File uploading
 exports.upload = (req, res) => {
   const fileUrl = `${req.file.filename}`;
+  console.log(fileUrl);
   uploadData
     .create({
       description: req.body.filename,
@@ -20,3 +22,16 @@ exports.upload = (req, res) => {
 };
 
 // File downloading
+exports.download = (req, res) => {
+  console.log(req.body.filepath);
+  const buffer = fs.readFileSync(req.body.filepath);
+  const bufferBase64 = new Buffer(buffer);
+  res.status(200).send(bufferBase64);
+};
+
+// Get uploaded files
+exports.getUploadedFiles = (req, res) => {
+  uploadData.findAll({ attributes: ['filename', 'createdAt'] }).then((files) => {
+    res.send(files);
+  });
+};

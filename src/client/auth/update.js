@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actionCreator from '../redux/actions';
-
+import actionCreator from '../redux/actions/user.actions';
+import FormErrors from './formErrors';
 const mapDispatchToProps = dispatch => ({
   accountUpdate: userData => dispatch(actionCreator.accountUpdate(userData))
 });
@@ -10,32 +10,76 @@ class AppUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emailAddress: localStorage.getItem('emailAddress'),
       username: localStorage.getItem('username'),
-      oldInputPassword: '',
+      oldPassword: '',
+      newPassword: '',
       confirmPassword: '',
-      newPassword: ''
+      formErrors: { oldPassword: '', newPassword: '', confirmPassword: '' },
+      oldPasswordValid: false,
+      newPasswordValid: false,
+      confirmPasswordValid: false,
+      formValid: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateField = this.validateField.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
+  validateField(fieldName, value) {
+    let { oldPasswordValid, newPasswordValid, confirmPasswordValid } = this.state;
+    let fieldValidationErrors = this.state.formErrors;
+
+    switch (fieldName) {
+      case 'oldPassword':
+        oldPasswordValid = value.length >= 6;
+        fieldValidationErrors.oldPassword = oldPasswordValid ? '' : 'Password is too short';
+        break;
+      case 'newPassword':
+        newPasswordValid = value.length >= 6;
+        fieldValidationErrors.newPassword = newPasswordValid ? '' : 'Password is too short';
+        break;
+      case 'confirmPassword':
+        const { newPassword } = this.state;
+        confirmPasswordValid = value == newPassword ? true : false;
+        fieldValidationErrors.confirmPassword = confirmPasswordValid
+          ? ''
+          : 'Password is different from new password';
+        break;
+      default:
+        break;
+    }
+    this.setState(
+      {
+        formErrors: fieldValidationErrors,
+        oldPasswordValid: oldPasswordValid,
+        newPasswordValid: newPasswordValid,
+        confirmPasswordValid: confirmPasswordValid
+      },
+      this.validateForm
+    );
+  }
+  validateForm() {
+    const { oldPasswordValid, newPasswordValid, confirmPasswordValid } = this.state;
+    this.setState({
+      formValid: oldPasswordValid && newPasswordValid && confirmPasswordValid
+    });
+  }
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      this.validateField(name, value);
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { emailAddress, username, newPassword } = this.state;
-    if (newPassword === confirmPassword) {
-      this.props.accountUpdate({ emailAddress, username, newPassword });
-    }
-    this.setState({ oldInputPassword: '', newPassword: '', confirmPassword: '' });
+    const { username, oldPassword, newPassword } = this.state;
+    this.props.accountUpdate({ username, oldPassword, newPassword });
   }
 
   render() {
-    const { oldInputPassword, newPassword, confirmPassword } = this.state;
+    const { oldPassword, newPassword, confirmPassword, formErrors, formValid } = this.state;
     return (
       <div className="row container">
         <div
@@ -49,10 +93,11 @@ class AppUpdate extends React.Component {
               <input
                 type="password"
                 className="form-control"
-                name="oldInputPassword"
-                value={oldInputPassword}
+                name="oldPassword"
+                value={oldPassword}
                 onChange={this.handleChange}
               />
+              <FormErrors formErrors={{ oldPassword: formErrors.oldPassword }} />
             </div>
             <div className="form-group">
               <label>New password</label>
@@ -63,6 +108,7 @@ class AppUpdate extends React.Component {
                 value={newPassword}
                 onChange={this.handleChange}
               />
+              <FormErrors formErrors={{ newPassword: formErrors.newPassword }} />
             </div>
             <div className="form-group">
               <label>Confirm new password</label>
@@ -73,9 +119,10 @@ class AppUpdate extends React.Component {
                 value={confirmPassword}
                 onChange={this.handleChange}
               />
+              <FormErrors formErrors={{ confirmPassword: formErrors.confirmPassword }} />
             </div>
             <div className="form-button">
-              <button type="submit" className="btn btn-success btn-block">
+              <button type="submit" className="btn btn-success btn-block" disabled={!formValid}>
                 Update password
               </button>
             </div>

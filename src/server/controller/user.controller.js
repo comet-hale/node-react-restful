@@ -8,22 +8,27 @@ const user = db.User;
 // Login a user
 exports.login = (req, res) => {
   const { username, password } = req.body;
+  console.log('login');
   user
     .find({
       where: { username }
     })
     .then((ans) => {
       bcrypt.compare(password, ans.password).then((samePassword) => {
-        if (samePassword) {
-          res.send({
+        if (samePassword === true) {
+          res.status(201).send({
             token: creatToken(username),
             emailAddress: ans.emailAddress,
             username
           });
+        } else {
+          res.status(402).send('Password is invalid');
         }
       });
     })
-    .catch(err => res.status(401).send('Unauthorized'));
+    .catch((err) => {
+      res.status(401).send('Username is invalid');
+    });
 };
 
 // Create a user
@@ -37,7 +42,7 @@ exports.create = (req, res) => {
     })
     .then((ret) => {
       if (ret !== null) {
-        res.send('Registered email');
+        res.status(405).send('Registered email or username');
         return;
       }
       bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => user
@@ -65,25 +70,31 @@ exports.findAll = (req, res) => {
 
 // Update a user
 exports.update = (req, res) => {
-  const { emailAddress, username, password } = req.body;
-  user
-    .update(
-      {
-        emailAddress,
-        username,
-        password
-      },
-      {
-        where: { username }
+  const { username, oldPassword, newPassword } = req.body;
+  user.find({ where: { username } }).then((ans) => {
+    bcrypt.compare(oldPassword, ans.password).then((samePassword) => {
+      if (samePassword) {
+        bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
+          user
+            .update(
+              {
+                password: hashedPassword
+              },
+              {
+                where: { username }
+              }
+            )
+            .then(
+              res.send({
+                token: creatToken(username)
+              })
+            );
+        });
+      } else {
+        res.status(402).send('Old password in invalid');
       }
-    )
-    .then(
-      res.send({
-        token: creatToken(username),
-        emailAddress,
-        username
-      })
-    );
+    });
+  });
 };
 
 // Delete a user
@@ -93,6 +104,6 @@ exports.delete = (req, res) => {
       where: { username: req.body.username }
     })
     .then(() => {
-      res.status(200).send('deleted successfully a user');
+      res.status(200).send('Deleted successfully a user');
     });
 };

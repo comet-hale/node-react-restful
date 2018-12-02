@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actionCreator from '../redux/actions';
+import actionCreator from '../redux/actions/user.actions';
 import FormErrors from './formErrors';
-
 const mapDispatchToProps = dispatch => ({
   login: userData => dispatch(actionCreator.login(userData))
 });
@@ -66,10 +65,7 @@ class AppLogIn extends React.Component {
     e.preventDefault(); //default prevent get method action: url=/?,
     //so not to reload the page in server
     const { username, password } = this.state;
-    if (username && password) {
-      this.props.login({ username, password });
-      this.setState({ username: '', password: '' });
-    }
+    this.props.login({ username, password });
   }
 
   render() {

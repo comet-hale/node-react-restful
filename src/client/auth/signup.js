@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actionCreator from '../redux/actions';
+import actionCreator from '../redux/actions/user.actions';
 import FormErrors from './formErrors';
 
 const mapDispatchToProps = dispatch => ({
@@ -71,10 +71,7 @@ class AppSignUp extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { emailAddress, username, password } = this.state;
-    if (username && password) {
-      this.props.signup({ emailAddress, username, password });
-    }
-    this.setState({ emailAddress: '', username: '', password: '' });
+    this.props.signup({ emailAddress, username, password });
   }
 
   render() {

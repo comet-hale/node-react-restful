@@ -1,46 +1,50 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actionCreator from '../redux/actions';
+import actionCreator from '../redux/actions/file.actions';
 
 const mapDispatchToProps = dispatch => ({
-  fileUpload: () => dispatch(actionCreator.fileUpload())
+  fileUpload: uploadParams => dispatch(actionCreator.fileUpload(uploadParams))
 });
 
 class FileUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { description: '' };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { fileURL: '' };
     this.handleUploadFile = this.handleUploadFile.bind(this);
   }
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-  handleUpload(e) {
+
+  handleUploadFile(e) {
+    e.preventDefault();
     const data = new FormData();
-    data.append('file', e.target.files[0]);
+    data.append('avatar', this.uploadInput.files[0]);
+    // data.append('filename', this.fileName.value);
+    this.props.fileUpload(data);
   }
 
   render() {
     return (
       <div className="container">
-        <h2>File upload</h2>
-        <form onSubmit={this.handleUpload}>
+        <form onSubmit={this.handleUploadFile}>
           <div>
             <input
-              type="text"
-              className="form-control"
-              name="description"
-              value={description}
-              onChange={this.handleChange}
+              ref={ref => {
+                this.uploadInput = ref;
+              }}
+              type="file"
             />
           </div>
-          <input type="file" onChange={this.handleUploadFile} />
           <div>
-            <button type="submit" className="btn btn-lg btn-success btn-block">
-              Upload
-            </button>
+            <input
+              ref={ref => {
+                this.fileName = ref;
+              }}
+              type="text"
+              placeholder="Enter the desired name of file"
+            />
+          </div>
+          <br />
+          <div>
+            <button>Upload</button>
           </div>
         </form>
       </div>
@@ -52,3 +56,4 @@ export default connect(
   null,
   mapDispatchToProps
 )(FileUpload);
+// export default FileUpload;

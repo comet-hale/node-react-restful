@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actionCreator from '../redux/actions';
+import actionCreator from '../redux/actions/user.actions';
 
 const mapStateToProps = state => ({ loginFlag: state.loginFlag });
 const mapDispatchToProps = dispatch => ({

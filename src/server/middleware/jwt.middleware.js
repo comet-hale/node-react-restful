@@ -8,6 +8,7 @@ const verifyToken = (req, res, next) => {
     if (jwt.verify(authentification, key.secret) !== undefined) {
       next();
     } else {
+      res.status(403).send('Token is invalid');
     }
   } catch (err) {}
 };
