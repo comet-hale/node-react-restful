@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import actionCreator from '../redux/actions/user.actions';
 import FormErrors from './formErrors';
+
+const mapStateToProps = state => {
+  return { loginFlag: state.loginFlag };
+};
 const mapDispatchToProps = dispatch => ({
   login: userData => dispatch(actionCreator.login(userData))
 });
@@ -62,12 +66,13 @@ class AppLogIn extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault(); //default prevent get method action: url=/?,
-    //so not to reload the page in server
+    e.preventDefault(); //default prevent get method action
     const { username, password } = this.state;
     this.props.login({ username, password });
   }
-
+  componentWillReceiveProps() {
+    this.props.history.push('/');
+  }
   render() {
     const { username, password, formErrors, formValid } = this.state;
     return (
@@ -117,6 +122,6 @@ class AppLogIn extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AppLogIn);

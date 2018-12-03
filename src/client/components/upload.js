@@ -17,7 +17,6 @@ class FileUpload extends React.Component {
     e.preventDefault();
     const data = new FormData();
     data.append('avatar', this.uploadInput.files[0]);
-    // data.append('filename', this.fileName.value);
     this.props.fileUpload(data);
   }
 
@@ -33,16 +32,6 @@ class FileUpload extends React.Component {
               type="file"
             />
           </div>
-          <div>
-            <input
-              ref={ref => {
-                this.fileName = ref;
-              }}
-              type="text"
-              placeholder="Enter the desired name of file"
-            />
-          </div>
-          <br />
           <div>
             <button>Upload</button>
           </div>

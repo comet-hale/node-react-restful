@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import actionCreator from '../redux/actions/user.actions';
 import FormErrors from './formErrors';
 
+const mapStateToProps = state => {
+  return { loginFlag: state.loginFlag };
+};
 const mapDispatchToProps = dispatch => ({
   signup: userData => dispatch(actionCreator.signup(userData))
 });
@@ -73,7 +76,9 @@ class AppSignUp extends React.Component {
     const { emailAddress, username, password } = this.state;
     this.props.signup({ emailAddress, username, password });
   }
-
+  componentWillReceiveProps() {
+    this.props.history.push('/');
+  }
   render() {
     const { username, password, emailAddress, formErrors, formValid } = this.state;
     return (
@@ -132,6 +137,6 @@ class AppSignUp extends React.Component {
   }
 }
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AppSignUp);

@@ -22,9 +22,8 @@ exports.upload = (req, res) => {
 };
 
 // File downloading
-exports.download = (req, res) => {
-  console.log(req.body.filepath);
-  const buffer = fs.readFileSync(req.body.filepath);
+exports.downloadFile = (req, res) => {
+  const buffer = fs.readFileSync(`F:/projects/express_react/upload/${req.query.value}`);
   const bufferBase64 = new Buffer(buffer);
   res.status(200).send(bufferBase64);
 };

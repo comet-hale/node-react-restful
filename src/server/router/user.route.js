@@ -6,7 +6,6 @@ const uploading = require('../middleware/upload.middleware');
 const jwtMiddleware = require('../middleware/jwt.middleware');
 
 const router = express.Router();
-
 // user managing
 router.post('/user/login', user.login);
 router.post('/user/signup', user.create);
@@ -15,9 +14,8 @@ router.put('/user/update', jwtMiddleware, user.update);
 router.delete('/user/delete', jwtMiddleware, user.delete);
 
 // file uploading and downloading
-// router.post('/upload', uploading.single('avatar'), (req, res) => console.log(req.domain));
 router.post('/upload', jwtMiddleware, uploading.single('avatar'), files.upload);
-router.get('/find/files', files.getUploadedFiles);
-router.get('/download', files.download);
+router.get('/find/files', jwtMiddleware, files.getUploadedFiles);
+router.get('/download', jwtMiddleware, files.downloadFile);
 
 module.exports = router;
