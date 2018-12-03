@@ -34,22 +34,10 @@ class NavigationBar extends React.Component {
           </ul>
           {loginFlag ? (
             <ul className="nav navbar-nav navbar-right">
-              <li className="dropdown">
-                <a className="dropdown-toggle" data-toggle="dropdown">
-                  Files <span className="glyphicon glyphicon-menu-down" />
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link className="" to="/upload">
-                      <span className="glyphicon glyphicon-cloud-upload" /> Up load
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="" to="/download">
-                      <span className="glyphicon glyphicon-cloud-download" /> Down load
-                    </Link>
-                  </li>
-                </ul>
+              <li>
+                <Link className="" to="/fileload">
+                  File Load <span className="glyphicon glyphicon-file" />
+                </Link>
               </li>
               <li className="dropdown">
                 <a className="dropdown-toggle" data-toggle="dropdown">
