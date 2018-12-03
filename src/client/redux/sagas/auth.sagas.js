@@ -6,7 +6,6 @@ import actionCreator from '../actions/user.actions';
 // workers
 function* loginEffect(action) {
   try {
-    console.log(action.payload);
     const { data } = yield call(axiosFectch.fetchUser, 'post', 'user/login', action.payload, '');
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);

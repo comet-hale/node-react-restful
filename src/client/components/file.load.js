@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
   fileUpload: uploadParams => dispatch(actionCreator.fileUpload(uploadParams))
 });
 
-class DownLoad extends React.Component {
+class FormLoad extends React.Component {
   constructor(props) {
     super(props);
     this.state = { fileURL: '' };
@@ -41,19 +41,22 @@ class DownLoad extends React.Component {
     return (
       <div className="user-manage container">
         <div className="container">
-          <form onSubmit={this.handleUploadFile}>
-            <div>
-              <input
-                ref={ref => {
-                  this.uploadInput = ref;
-                }}
-                type="file"
-              />
-            </div>
-            <div>
-              <button>Upload</button>
-            </div>
-          </form>
+          {/* <form onSubmit={this.handleUploadFile}> */}
+          <div>
+            <input
+              ref={ref => {
+                this.uploadInput = ref;
+              }}
+              type="file"
+              className="form-control"
+            />
+          </div>
+          <div>
+            <button className="btn btn-lg btn-success btn-block" onClick={this.handleUploadFile}>
+              Upload
+            </button>
+          </div>
+          {/* </form> */}
         </div>
         <div>
           <table className="table table-striped">
@@ -92,4 +95,4 @@ class DownLoad extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DownLoad);
+)(FormLoad);

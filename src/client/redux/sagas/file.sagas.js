@@ -7,19 +7,16 @@ import actionCreator from '../actions/file.actions';
 // File upload
 function* fileUploadEffect(action) {
   try {
-    const { response } = yield call(axiosFetch.fetchFile, 'post', 'upload', action.payload, '', '');
-    if (response.success) {
-      alert('Upload success!');
-    } else {
-      alert('Upload failed!');
-    }
-  } catch (e) {}
+    const { data } = yield call(axiosFetch.fetchFile, 'post', 'upload', action.payload);
+    yield put(actionCreator.uploadSuccess(data));
+  } catch (e) {
+    alert('Uploaded faild');
+  }
 }
 
 // This will download the file in browser.
 function* fileDownloadEffect(action) {
   try {
-    console.log(action.payload);
     const { data } = yield call(
       axiosFetch.fetchFile,
       'get',
@@ -29,7 +26,9 @@ function* fileDownloadEffect(action) {
       'blob'
     );
     fileDownload(data, action.payload.value);
-  } catch (e) {}
+  } catch (e) {
+    alert('Downloaded faild');
+  }
 }
 
 // Get uploaded file list
@@ -38,7 +37,7 @@ function* getFileListsEffect() {
     const { data } = yield call(axiosFetch.fetchFile, 'get', 'find/files');
     yield put(actionCreator.saveFileLists(data));
   } catch (e) {
-    console.log('error');
+    alert('Error');
   }
 }
 

@@ -14,7 +14,7 @@ router.put('/user/update', jwtMiddleware, user.update);
 router.delete('/user/delete', jwtMiddleware, user.delete);
 
 // file uploading and downloading
-router.post('/upload', jwtMiddleware, uploading.single('avatar'), files.upload);
+router.post('/upload', jwtMiddleware, uploading.uploadFile, files.upload);
 router.get('/find/files', jwtMiddleware, files.getUploadedFiles);
 router.get('/download', jwtMiddleware, files.downloadFile);
 

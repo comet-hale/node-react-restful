@@ -8,7 +8,6 @@ const user = db.User;
 // Login a user
 exports.login = (req, res) => {
   const { username, password } = req.body;
-  console.log('login');
   user
     .find({
       where: { username }

@@ -4,9 +4,14 @@ const {
   GET_FILELISTS_WATCHER,
   FILE_UPLOAD_WATCHER,
   FILE_DOWNLOAD_WATCHER,
+  FILE_UPLOAD_SUCCESS,
   SAVE_FILE_INFO
 } = userConstants;
 
+exports.uploadSuccess = successedData => ({
+  type: FILE_UPLOAD_SUCCESS,
+  payload: successedData
+});
 exports.fileUpload = uploadParams => ({
   type: FILE_UPLOAD_WATCHER,
   payload: uploadParams

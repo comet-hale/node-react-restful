@@ -6,10 +6,10 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    filename: {
+    user: {
       type: Sequelize.STRING
     },
-    url: {
+    filename: {
       type: Sequelize.STRING
     },
     createdAt: {

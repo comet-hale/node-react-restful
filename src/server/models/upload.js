@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const uploadData = sequelize.define(
     'uploadData',
     {
-      description: DataTypes.STRING,
+      user: DataTypes.STRING,
       filename: DataTypes.STRING
     },
     {}

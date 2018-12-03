@@ -23,6 +23,11 @@ const rootReducer = (state = { loginFlag: false, data: [] }, action) => {
         ...state,
         data: action.payload
       };
+    case userConstants.FILE_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        data: [...state.data, action.payload]
+      };
     default:
       return state;
   }
