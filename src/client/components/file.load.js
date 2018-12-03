@@ -39,29 +39,40 @@ class FormLoad extends React.Component {
   render() {
     const { uploadedDatas } = this.props;
     return (
-      <div className="user-manage container">
-        <div className="container">
-          {/* <form onSubmit={this.handleUploadFile}> */}
+      <div className="container file-load">
+        <div className="container file-load-up">
           <div>
-            <input
-              ref={ref => {
-                this.uploadInput = ref;
-              }}
-              type="file"
-              className="form-control"
-            />
+            <h2>Upload file</h2>
           </div>
-          <div>
-            <button className="btn btn-lg btn-success btn-block" onClick={this.handleUploadFile}>
-              Upload
-            </button>
+          <div className="file-load-up-form">
+            <form className="form">
+              <div className="form-group">
+                <input
+                  ref={ref => {
+                    this.uploadInput = ref;
+                  }}
+                  type="file"
+                />
+              </div>
+              <div className="form-group">
+                <button
+                  className="btn btn-lg btn-success btn-block"
+                  onClick={this.handleUploadFile}
+                >
+                  Upload
+                </button>
+              </div>
+            </form>
           </div>
-          {/* </form> */}
         </div>
-        <div>
-          <table className="table table-striped">
+        <div className="container file-load-down">
+          <div>
+            <h2>Download file</h2>
+          </div>
+          <table className="table table-striped table-down-load">
             <thead>
               <tr>
+                <th>NO</th>
                 <th>URL of Files</th>
                 <th>Created At</th>
               </tr>
@@ -70,6 +81,7 @@ class FormLoad extends React.Component {
               {uploadedDatas.map((item, key) => {
                 return (
                   <tr key={key}>
+                    <td>{key}</td>
                     <td>
                       <button
                         className="btn btn-lg btn-success btn-block"

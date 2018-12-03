@@ -19,7 +19,7 @@ class UserManager extends React.Component {
   render() {
     const { userDatas } = this.props;
     return (
-      <div className="user-manage container">
+      <div className="container user-manage">
         <table className="table table-striped">
           <thead>
             <tr>
