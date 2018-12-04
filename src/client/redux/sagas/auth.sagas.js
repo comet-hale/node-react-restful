@@ -52,12 +52,14 @@ function* accountDeleteEffect() {
 }
 function* accountUpdateEffect(action) {
   try {
-    const { data } = yield call(axiosFectch.fetchUser, 'put', 'user/update', action.payload, {
+    const { history, ...updateInfo } = action.payload;
+    const { data } = yield call(axiosFectch.fetchUser, 'put', 'user/update', updateInfo, {
       authentification: localStorage.getItem('token')
     });
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);
     });
+    history.push('/');
   } catch (e) {
     alert(e.response.data);
   }

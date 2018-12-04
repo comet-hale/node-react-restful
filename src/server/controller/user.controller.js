@@ -69,7 +69,8 @@ exports.findAll = (req, res) => {
 
 // Update a user
 exports.update = (req, res) => {
-  const { username, oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword } = req.body;
+  const username = res.locals.user;
   user.find({ where: { username } }).then((ans) => {
     bcrypt.compare(oldPassword, ans.password).then((samePassword) => {
       if (samePassword) {

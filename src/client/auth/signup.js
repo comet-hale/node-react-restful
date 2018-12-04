@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import validate from './validate';
 import actionCreator from '../redux/actions/user.actions';
-import FormErrors from './formErrors';
 
 const mapStateToProps = state => {
   return { loginFlag: state.loginFlag };
@@ -18,57 +18,24 @@ class AppSignUp extends React.Component {
       username: '',
       password: '',
       formErrors: { emailAddress: '', username: '', password: '' },
-      emailAddressValid: false,
-      usernameValid: false,
-      passwordValid: false,
-      formValid: false
+      formValid: { emailAddress: false, username: false, password: false }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
-    this.validateForm = this.validateForm.bind(this);
   }
 
-  validateField(fieldName, value) {
-    let { emailAddressValid, usernameValid, passwordValid } = this.state;
-    let fieldValidationErrors = this.state.formErrors;
-
-    switch (fieldName) {
-      case 'emailAddress':
-        emailAddressValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.emailAddress = emailAddressValid ? '' : 'Email is invalid';
-        break;
-      case 'username':
-        usernameValid = value.length >= 6;
-        fieldValidationErrors.username = usernameValid ? '' : 'Username is too short';
-        break;
-      case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '' : 'Password is too short';
-        break;
-      default:
-        break;
-    }
-    this.setState(
-      {
-        formErrors: fieldValidationErrors,
-        emailAddressValid: emailAddressValid,
-        usernameValid: usernameValid,
-        passwordValid: passwordValid
-      },
-      this.validateForm
-    );
-  }
-  validateForm() {
-    const { emailAddressValid, usernameValid, passwordValid } = this.state;
-    this.setState({
-      formValid: emailAddressValid && usernameValid && passwordValid
-    });
-  }
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value }, () => {
-      this.validateField(name, value);
+      const { valid, error } = validate.validateField(name, value);
+      let formErrors = this.state.formErrors;
+      let formValid = this.state.formValid;
+      formValid[name] = valid;
+      formErrors[name] = error;
+      this.setState({
+        formErrors: formErrors,
+        formValid: formValid
+      });
     });
   }
   handleSubmit(e) {
@@ -99,7 +66,9 @@ class AppSignUp extends React.Component {
                 placeholder="Pick a username"
                 onChange={this.handleChange}
               />
-              <FormErrors formErrors={{ username: formErrors.username }} />
+              <div className="form-error">
+                <p>{formErrors.username}</p>
+              </div>
             </div>
             <div className="form-group">
               <label>Email</label>
@@ -111,7 +80,9 @@ class AppSignUp extends React.Component {
                 placeholder="you@example.com"
                 onChange={this.handleChange}
               />
-              <FormErrors formErrors={{ emailAddress: formErrors.emailAddress }} />
+              <div className="form-error">
+                <p>{formErrors.emailAddress}</p>
+              </div>
             </div>
             <div className="form-group">
               <label>Password</label>
@@ -123,10 +94,16 @@ class AppSignUp extends React.Component {
                 placeholder="Create a password"
                 onChange={this.handleChange}
               />
-              <FormErrors formErrors={{ password: formErrors.password }} />
+              <div className="form-error">
+                <p>{formErrors.password}</p>
+              </div>
             </div>
             <div className="form-button">
-              <button type="submit" className="btn btn-success btn-block" disabled={!formValid}>
+              <button
+                type="submit"
+                className="btn btn-success btn-block"
+                disabled={!(formValid.username && formValid.emailAddress && formValid.password)}
+              >
                 Sign up for FirstSite
               </button>
             </div>
