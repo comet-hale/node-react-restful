@@ -29,7 +29,7 @@ class AppUpdate extends React.Component {
     let formValid = this.state.formValid;
     if (name === 'confirmPassword') {
       formValid.confirmPassword = newPassword === value ? true : false;
-      formErrors.confirmPassword = newPassword === value ? '' : 'Password is different';
+      formErrors.confirmPassword = newPassword === value ? '' : 'Password is not the same.';
     } else {
       const { valid, error } = validate.validateField('password', value);
       formValid[name] = valid;

@@ -9,12 +9,12 @@ exports.validateField = (fieldName, value) => {
     case 'username':
       return {
         valid: value.length >= 6,
-        error: value.length >= 6 ? '' : 'Username is too short'
+        error: value.length >= 6 ? '' : 'The username must be at least 6 charaters.'
       };
     case 'password':
       return {
         valid: value.length >= 6,
-        error: value.length >= 6 ? '' : 'Password is too short'
+        error: value.length >= 6 ? '' : 'The password must be at least 6 characters.'
       };
     default:
   }

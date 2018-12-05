@@ -26,10 +26,11 @@ class AppRouter extends React.Component {
         <Switch>
           <Route path="/login" component={LogIn} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/fileload" component={FileLoader} />
+          <PrivateRoute path="/fileload" component={FileLoader} userInfo={loginFlag} />
           <PrivateRoute path="/update" component={Update} userInfo={loginFlag} />
           <PrivateRoute path="/usermanage" component={UserManager} userInfo={loginFlag} />
           <Route exact path="/" component={Home} />
+          <Route path="*" />
         </Switch>
       </div>
     );

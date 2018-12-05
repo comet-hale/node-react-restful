@@ -24,6 +24,11 @@ class AppSignUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // componentWillMount() {
+  //   if (this.props.loginFlag) {
+  //     this.props.history.push('/');
+  //   }
+  // }
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value }, () => {
