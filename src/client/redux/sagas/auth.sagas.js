@@ -18,7 +18,7 @@ function* loginEffect(action) {
 function* userManageEffect() {
   try {
     const { data } = yield call(axiosFectch.fetchUser, 'get', 'user/manage', '', {
-      authentification: localStorage.getItem('token')
+      authorization: localStorage.getItem('token')
     });
     yield put(actionCreator.userGet(data));
   } catch (e) {
@@ -44,7 +44,7 @@ function* accountDeleteEffect() {
       'user/delete',
       { username: localStorage.getItem('username') },
       {
-        authentification: localStorage.getItem('token')
+        authorization: localStorage.getItem('token')
       }
     );
     yield put(actionCreator.logout());
@@ -54,7 +54,7 @@ function* accountUpdateEffect(action) {
   try {
     const { history, ...updateInfo } = action.payload;
     const { data } = yield call(axiosFectch.fetchUser, 'put', 'user/update', updateInfo, {
-      authentification: localStorage.getItem('token')
+      authorization: localStorage.getItem('token')
     });
     Object.keys(data).map((key) => {
       localStorage.setItem(key, data[key]);

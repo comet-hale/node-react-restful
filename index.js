@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('./src/server/router/user.route.js');
+const routes = require('./src/server/routes/user.route.js');
 const db = require('./src/server/models');
 const ssr = require('./src/server/ssr/ssr.index'); // serverside rendering
 

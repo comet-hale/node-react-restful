@@ -1,7 +1,7 @@
 const express = require('express');
 
 const user = require('../controller/user.controller');
-const files = require('../controller/file.loader');
+const files = require('../controller/file.controller');
 const uploading = require('../middleware/upload.middleware');
 const jwtMiddleware = require('../middleware/jwt.middleware');
 

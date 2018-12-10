@@ -14,6 +14,6 @@ exports.fetchFile = (method = 'get', url, data, params, responseType) => axios.r
   params,
   data,
   headers: {
-    authentification: localStorage.getItem('token')
+    authorization: localStorage.getItem('token')
   }
 });

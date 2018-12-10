@@ -5,10 +5,9 @@ const uploadData = db.uploadData;
 
 // File uploading
 exports.upload = (req, res) => {
-  console.log(res.locals.user);
   uploadData
     .create({
-      user: res.locals.user,
+      userId: res.locals.userId,
       filename: `${req.file.filename}`
     })
     .then((fileInfo) => {
@@ -39,9 +38,10 @@ exports.getUploadedFiles = (req, res) => {
   uploadData
     .findAll({
       attributes: ['filename', 'createdAt'],
-      where: { user: res.locals.user }
+      where: { userId: res.locals.userId }
     })
     .then((files) => {
+      console.log(files);
       res.send(files);
     })
     .catch(err => res.status(500).send('Server Error'));

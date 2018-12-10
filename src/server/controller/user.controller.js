@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require('../models');
-const creatToken = require('../helper/token.create');
+const createToken = require('../helper/token.create');
 
 const BCRYPT_SALT_ROUNDS = 10;
 const user = db.User;
@@ -12,12 +12,12 @@ exports.login = (req, res) => {
     .find({
       where: { username }
     })
-    .then((ans) => {
-      bcrypt.compare(password, ans.password).then((samePassword) => {
+    .then((data) => {
+      bcrypt.compare(password, data.password).then((samePassword) => {
         if (samePassword === true) {
           res.status(201).send({
-            token: creatToken(username),
-            emailAddress: ans.emailAddress,
+            token: createToken(data.id),
+            emailAddress: data.emailAddress,
             username
           });
         } else {
@@ -52,7 +52,7 @@ exports.create = (req, res) => {
         })
         .then(
           res.send({
-            token: creatToken(username),
+            token: createToken(username),
             emailAddress,
             username
           })
@@ -86,7 +86,7 @@ exports.update = (req, res) => {
             )
             .then(
               res.send({
-                token: creatToken(username)
+                token: createToken(username)
               })
             );
         });

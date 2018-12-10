@@ -3,14 +3,17 @@ const key = require('../config/token.key.js');
 
 // Verify token
 const verifyToken = (req, res, next) => {
-  const { authentification } = req.headers;
+  const { authorization } = req.headers;
   try {
-    const auth = jwt.verify(authentification, key.secret);
-    if (auth !== undefined) {
-      res.locals.user = auth;
-      next();
+    if (authorization && authorization.split(' ')[0] === 'Bearer') {
+      const id = jwt.verify(authorization.split(' ')[1], key.secret);
+      if (id !== undefined) {
+        res.locals.userId = id;
+        next();
+      } else {
+        res.status(403).send('Token is invalid');
+      }
     } else {
-      res.status(403).send('Token is invalid');
     }
   } catch (err) {}
 };

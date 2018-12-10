@@ -35,6 +35,7 @@ function* fileDownloadEffect(action) {
 function* getFileListsEffect() {
   try {
     const { data } = yield call(axiosFetch.fetchFile, 'get', 'find/files');
+    console.log(data);
     yield put(actionCreator.saveFileLists(data));
   } catch (e) {
     alert('Error');
