@@ -7,7 +7,7 @@ const uploadData = db.uploadData;
 exports.upload = (req, res) => {
   uploadData
     .create({
-      userId: res.locals.userId,
+      userId: res.locals.user_id,
       filename: `${req.file.filename}`
     })
     .then((fileInfo) => {

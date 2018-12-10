@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
     if (authorization && authorization.split(' ')[0] === 'Bearer') {
       const id = jwt.verify(authorization.split(' ')[1], key.secret);
       if (id !== undefined) {
-        res.locals.userId = id;
+        res.locals.user_id = id;
         next();
       } else {
         res.status(403).send('Token is invalid');
