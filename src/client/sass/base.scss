@@ -1,0 +1,27 @@
+@import "home", "login", "user.manage";
+
+$var: #ffffff;
+body {
+  background: $var;
+}
+.container-fluid {
+  padding: 0px;
+}
+.first-pg {
+  .first-pg-user-manage {
+    margin-top: 17px;
+  }
+  .row {
+    margin: auto;
+  }
+  li {
+    font-family: sans-serif;
+    font-size: 20px;
+  }
+  a.dropdown-toggle {
+    cursor: pointer;
+  }
+}
+.navbar-right {
+  margin-top: 15px;
+}

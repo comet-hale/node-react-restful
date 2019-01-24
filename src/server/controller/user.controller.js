@@ -1,92 +1,109 @@
-const jwt = require('jsonwebtoken');
-const config = require('./login/token_config.json');
+const bcrypt = require('bcrypt');
 const db = require('../models');
+const createToken = require('../helper/token.create');
 
+const BCRYPT_SALT_ROUNDS = 10;
 const user = db.User;
-const uploadData = db.uploadData;
 
-// Login a user and return token
+// Login a user
 exports.login = (req, res) => {
   const { username, password } = req.body;
-  const auth_man = user.find({
-    where: {
-      username,
-      password
-    }
-  });
-  if (auth_man) {
-    const token = jwt.sign({ sub: user.id }, config.secret);
-    res.send({ loginFlag: true, tokenData: token });
-  }
+  user
+    .find({
+      where: { username }
+    })
+    .then((data) => {
+      bcrypt.compare(password, data.password).then((samePassword) => {
+        if (samePassword === true) {
+          res.status(201).send({
+            token: createToken(data.id),
+            emailAddress: data.emailAddress,
+            username
+          });
+        } else {
+          res.status(402).send('Password is invalid');
+        }
+      });
+    })
+    .catch((err) => {
+      res.status(401).send('Username is invalid');
+    });
 };
+
 // Create a user
 exports.create = (req, res) => {
   const { emailAddress, username, password } = req.body;
-  // Save to MySQL database
   user
-    .create({
-      emailAddress,
-      username,
-      password
+    .find({
+      where: {
+        emailAddress
+      }
     })
-    .then((user) => {
-      // Send created user to client
-      res.send(user);
+    .then((ret) => {
+      if (ret !== null) {
+        res.status(405).send('Registered email or username');
+        return;
+      }
+      bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => user
+        .create({
+          emailAddress,
+          username,
+          password: hashedPassword
+        })
+        .then(
+          res.send({
+            token: createToken(username),
+            emailAddress,
+            username
+          })
+        ));
     });
 };
+
 // Fetch all users
 exports.findAll = (req, res) => {
-  user.findAll().then((users) => {
+  user.findAll({ attributes: ['emailAddress', 'username'] }).then((users) => {
     res.send(users);
   });
 };
-// Find a user by Id
-exports.findById = (req, res) => {
-  user.findById(req.params.userId).then((user) => {
-    res.send(user);
-  });
-};
+
 // Update a user
 exports.update = (req, res) => {
-  const id = req.params.userId;
-  const { emailAddress, username, password } = req.body;
-  user
-    .update(
-      {
-        emailAddress,
-        username,
-        password
-      },
-      {
-        where: { id }
+  const { oldPassword, newPassword } = req.body;
+  const username = res.locals.user;
+  user.find({ where: { username } }).then((ans) => {
+    bcrypt.compare(oldPassword, ans.password).then((samePassword) => {
+      if (samePassword) {
+        bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
+          user
+            .update(
+              {
+                password: hashedPassword
+              },
+              {
+                where: { username }
+              }
+            )
+            .then(
+              res.send({
+                token: createToken(username)
+              })
+            );
+        });
+      } else {
+        res.status(402).send('Old password in invalid');
       }
-    )
-    .then(() => {
-      res.status(200).send(`updated successfully a user with id = ${id}`);
     });
+  });
 };
 
-// Delete a user by Id
+// Delete a user
 exports.delete = (req, res) => {
-  const id = req.params.userId;
   user
     .destroy({
-      where: { id }
+      where: { username: req.body.username }
     })
     .then(() => {
-      res.status(200).send(`deleted successfully a user with id = ${id}`);
-    });
-};
-
-// File uploading
-exports.upload = (req, res) => {
-  const filePath = `${req.protocol}://${req.domain}/${req.file.filename}`;
-  uploadData
-    .create({
-      filename: req.body.filename,
-      url: filePath
-    })
-    .then((user) => {
-      res.send(user);
+      res.status(200).send('Deleted successfully a user');
     });
 };
