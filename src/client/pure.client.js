@@ -12,7 +12,6 @@ const state = window.__STATE__;
 delete window.__STATE__;
 const store = configureStore(state);
 
-// console.log('------------------------------------------->');
 // const token = localStorage.getItem('token');
 // if (token) {
 //   store.dispatch({ type: userConstants.USER_LOGIN });

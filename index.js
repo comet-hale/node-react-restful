@@ -8,6 +8,7 @@ const app = express();
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 
+console.log(dev);
 if (dev) {
   const webpack = require('webpack');
   const config = require('./webpack.dev.config.js');
